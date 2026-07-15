@@ -22,9 +22,7 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
       const navEl = document.getElementById('pantherNav');
       if (navEl?.classList.contains('show')) {
-        import('bootstrap').then(({ Collapse }) => {
-          Collapse.getOrCreateInstance(navEl).hide();
-        });
+        document.querySelector<HTMLElement>('.navbar-toggler')?.click();
       }
     });
   }

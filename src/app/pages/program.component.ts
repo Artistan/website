@@ -1,5 +1,4 @@
 import { Component, computed, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { SponsorsSupportersComponent } from '../components/sponsors-supporters.component';
 import {
   COACHES,
@@ -17,7 +16,7 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
 
 @Component({
   selector: 'app-program',
-  imports: [RouterLink, SponsorsSupportersComponent],
+  imports: [SponsorsSupportersComponent],
   template: `
     <section class="hero-panther py-5">
       <div class="container hero-inner">
