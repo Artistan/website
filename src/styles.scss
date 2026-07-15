@@ -60,6 +60,13 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-size: 0.85rem;
+}
+
+@media (min-width: 992px) {
+  .navbar-panther .navbar-brand {
+    font-size: 1rem;
+  }
 }
 
 .navbar-panther .navbar-brand .brand-silver {
