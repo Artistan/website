@@ -3,7 +3,7 @@
 The official site of the Century Panther Touchdown Club — the booster
 organization behind RCHS Panthers football — built with
 [Angular](https://angular.dev) 19 + Bootstrap 5 + Font Awesome and
-deployed to GitHub Pages at [topshots.me](https://topshots.me).
+deployed to GitHub Pages at [centurypantherfootball.com](https://centurypantherfootball.com).
 
 ## Pages
 
@@ -39,7 +39,7 @@ npm run build   # production build -> dist/pages-app/browser
 
 Pushes to `master` run `.github/workflows/deploy.yml`, which builds the app and
 publishes `dist/pages-app/browser` to the `gh-pages` branch (GitHub Pages serves
-it at topshots.me). The workflow needs:
+it at centurypantherfootball.com). The workflow needs:
 
 - A `FONTAWESOME_NPM_TOKEN` repository secret (Actions) for `npm install`.
 - Permission for `github-actions[bot]` to push `gh-pages` — if a branch ruleset

@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "update:pages-app": "ng update @angular/cli @angular/core '@awesome.me/kit-2144818cc7'",
-    "deploy": "ng deploy --cname=topshots.me --dir=dist/pages-app/browser"
+    "deploy": "ng deploy --cname=centurypantherfootball.com --dir=dist/pages-app/browser"
   },
   "private": true,
   "dependencies": {
