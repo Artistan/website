@@ -1,0 +1,10 @@
+{
+  "priority": [
+    {
+      "name": "Standard Guidelines",
+      "file": "guidelines.md",
+      "description": "Required process for handling all code requests",
+      "priority": 1
+    }
+  ]
+}

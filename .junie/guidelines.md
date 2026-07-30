@@ -1,2 +1,0 @@
-angular app
-github pages

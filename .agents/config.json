@@ -1,0 +1,27 @@
+{
+  "model": "sonnet",
+  "provider": "anthropic",
+  "brave": true,
+  "flags": ["copilot"],
+  "mcp-locations": ["../.agents/mcp", "../.agents/shared/mcp"],
+  "mcp-default-locations": true,
+  "skill-locations": ["../.agents/skills"],
+  "skill-default-locations": false,
+  "command-locations": ["../.agents/commands"],
+  "command-default-locations": false,
+  "agent-locations": ["../.agents/agents"],
+  "agent-default-location": true,
+  "model-locations": ["../.agents/models"],
+  "model-default-locations": true,
+  "auto-update": true,
+  "guidelines-location": "../.agents/guidelines/config.json",
+  "time-limit": 3600,
+  "prioritizedGuidelines": "use ../.agents/guidelines/config.json for prioritization",
+  "settings": {
+    "checkAllGuidelinesOnStartup": true,
+    "remindAboutGuidelinesOnCodeRequests": true,
+    "defaultCodeStyle": "PSR-12",
+    "preferredTestingFramework": "PHPUnit",
+    "autoCheckCodeQuality": true
+  }
+}
