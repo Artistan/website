@@ -20,8 +20,8 @@
   "settings": {
     "checkAllGuidelinesOnStartup": true,
     "remindAboutGuidelinesOnCodeRequests": true,
-    "defaultCodeStyle": "PSR-12",
-    "preferredTestingFramework": "PHPUnit",
+    "defaultCodeStyle": "Angular/TypeScript strict, single quotes, 2-space indent (.editorconfig)",
+    "preferredTestingFramework": "Karma + Jasmine",
     "autoCheckCodeQuality": true
   }
 }
