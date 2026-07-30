@@ -15,6 +15,13 @@ interface TierRow {
   boxes: SampleBox[];
 }
 
+interface CouponCardSponsor {
+  src: string;
+  name: string;
+  /** True when the logo's artwork is light/transparent and washes out on a white card. */
+  dark?: boolean;
+}
+
 /** Obviously-fictional greyed-out corporations for the sample logo slots. */
 const FAKE_LOGOS: { icon: string; name: string }[] = [
   { icon: 'fa-solid fa-car', name: 'Acme Motors' },
@@ -53,6 +60,18 @@ const CORPORATE_ROWS: TierRow[] = [
   { title: 'Gold Sponsors', size: 'sample-md', rowCols: 'row-cols-2 row-cols-md-4', boxes: corporateBoxes(4, 1) },
   { title: 'Silver Sponsors', size: 'sample-sm', rowCols: 'row-cols-2 row-cols-md-4', boxes: corporateBoxes(8, 3) },
   { title: 'Bronze Sponsors', size: 'sample-xs', rowCols: 'row-cols-3 row-cols-md-6', boxes: corporateBoxes(12, 7) },
+];
+
+/** Real sponsor logos for the Coupon Card fundraiser, served from public/sponsors/coupon-card. */
+const COUPON_CARD_SPONSORS: CouponCardSponsor[] = [
+  { src: '/sponsors/coupon-card/Blue Lagoon.png', name: 'Blue Lagoon' },
+  { src: '/sponsors/coupon-card/KwikTrip.png', name: 'KwikTrip' },
+  { src: '/sponsors/coupon-card/Newts.png', name: 'Newts' },
+  { src: '/sponsors/coupon-card/Purple Goat.png', name: 'Purple Goat' },
+  { src: '/sponsors/coupon-card/Two Sisters.png', name: 'Two Sisters', dark: true },
+  { src: '/sponsors/coupon-card/Wildwood.jpg', name: 'Wildwood' },
+  { src: '/sponsors/coupon-card/Workshop.png', name: 'Workshop' },
+  { src: '/sponsors/coupon-card/YellowArch.png', name: 'McDonald\'s®' },
 ];
 
 const COMMUNITY_ROWS: TierRow[] = [
@@ -101,6 +120,19 @@ const COMMUNITY_ROWS: TierRow[] = [
             }
           </div>
         }
+
+        <div class="small fw-semibold text-muted text-uppercase mb-2">Coupon Card Sponsors</div>
+        <div class="row g-3 mb-4 row-cols-3 row-cols-md-6">
+          @for (sponsor of couponCardSponsors; track sponsor.name) {
+            <div class="col">
+              <div class="sponsor-logo-box" [class.sponsor-logo-box--dark]="sponsor.dark">
+                <img [src]="sponsor.src" [alt]="sponsor.name" class="sponsor-logo-img" />
+                <span class="small fw-semibold">{{ sponsor.name }}</span>
+              </div>
+            </div>
+          }
+        </div>
+
         <div class="text-center mb-4">
           <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
             <i class="fa-solid fa-handshake me-2"></i>Become a Corporate Sponsor
@@ -139,6 +171,7 @@ const COMMUNITY_ROWS: TierRow[] = [
 })
 export class SponsorsSupportersComponent {
   corporateRows = CORPORATE_ROWS;
+  couponCardSponsors = COUPON_CARD_SPONSORS;
   communityRows = COMMUNITY_ROWS;
   businessZeffyUrl = BUSINESS_SPONSORS_ZEFFY_URL;
   communityZeffyUrl = TOUCHDOWN_CLUB_ZEFFY_URL;

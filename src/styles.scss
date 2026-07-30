@@ -222,6 +222,34 @@ body {
   font-size: 1rem;
 }
 
+.sponsor-logo-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 100%;
+  border: 1px solid rgba(91, 107, 132, 0.25);
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 0.75rem 0.5rem;
+}
+
+.sponsor-logo-box .sponsor-logo-img {
+  max-width: 100%;
+  max-height: 3.5rem;
+  object-fit: contain;
+}
+
+.sponsor-logo-box--dark {
+  background: var(--panther-navy-soft);
+  border-color: var(--panther-navy);
+}
+
+.sponsor-logo-box--dark span {
+  color: #fff;
+}
+
 .tier-row-heading {
   font-weight: 800;
   text-transform: uppercase;
