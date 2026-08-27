@@ -99,6 +99,20 @@ Full narrative context: root `CLAUDE.md`.
 - Several site sections (sponsor tiers, roster, board) render **intentional
   placeholder/sample data** clearly marked "(sample)" or "Your Name Here"
   pending real season data — this is deliberate design, not a bug.
+- Sponsorship/support CTAs ("Become a Sponsor", "Join for $X", "Choose your
+  package", etc. on `/sponsors` and `/get-involved`) normally link to the
+  club's Zeffy sponsorship program checkout, but automatically fall back to
+  the `/contact` page inside a fixed window before the season opener — a
+  late signup needs a personal check that the club can still deliver (program
+  ad placement, signage, etc.) rather than taking a Zeffy payment it may not
+  fulfill in time. Driven by `SEASON_KICKOFF_DATE`,
+  `TOUCHDOWN_CLUB_MINIMUM_DONATION_DATE` (3 weeks out), and
+  `BUSINESS_SPONSORS_MINIMUM_DONATION_DATE` (2 weeks out) in `site-links.ts`
+  — update `SEASON_KICKOFF_DATE` there each year once the real season opener
+  is set. Note this site prerenders to static HTML at build time
+  (`angular.json`'s `outputMode: static, prerender: true`), so the switch
+  reflects the real visitor's date only after Angular hydration runs
+  client-side, not in the raw prerendered snapshot.
 - `npm audit` / Dependabot: as of the last pass, ~39 alerts remain open,
   effectively all blocked behind either an Angular 19→21 major upgrade
   (affects `@angular-devkit/build-angular`'s pinned `vite`/`postcss`/etc.),

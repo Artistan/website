@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SponsorsSupportersComponent } from '../components/sponsors-supporters.component';
-import { BUSINESS_SPONSORS_ZEFFY_URL } from '../site-links';
+import { BUSINESS_SPONSORS_ZEFFY_URL, SHOW_BUSINESS_SPONSORS_ZEFFY_LINK } from '../site-links';
 
 @Component({
   selector: 'app-sponsors',
@@ -31,9 +31,15 @@ import { BUSINESS_SPONSORS_ZEFFY_URL } from '../site-links';
           <a routerLink="/get-involved" class="btn btn-silver btn-lg">
             <i class="fa-solid fa-heart me-2"></i>Donate &amp; Get Involved
           </a>
-          <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-outline-silver btn-lg">
-            <i class="fa-solid fa-handshake me-2"></i>Corporate sponsorships
-          </a>
+          @if (showBusinessZeffyLink) {
+            <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-outline-silver btn-lg">
+              <i class="fa-solid fa-handshake me-2"></i>Corporate sponsorships
+            </a>
+          } @else {
+            <a routerLink="/contact" class="btn btn-outline-silver btn-lg">
+              <i class="fa-solid fa-handshake me-2"></i>Corporate sponsorships
+            </a>
+          }
         </div>
       </div>
     </section>
@@ -41,4 +47,5 @@ import { BUSINESS_SPONSORS_ZEFFY_URL } from '../site-links';
 })
 export class SponsorsComponent {
   businessZeffyUrl = BUSINESS_SPONSORS_ZEFFY_URL;
+  showBusinessZeffyLink = SHOW_BUSINESS_SPONSORS_ZEFFY_LINK;
 }

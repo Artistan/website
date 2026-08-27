@@ -20,6 +20,12 @@ deployed to GitHub Pages at [centurypantherfootball.com](https://centurypantherf
 ## Placeholders to customize
 
 - **Social links** — footer + contact page link to `#` until real profiles are added.
+- **Sponsorship CTAs** — "Become a Sponsor"/"Join for $X"/"Choose your package" buttons on
+  `/sponsors` and `/get-involved` normally link to the club's Zeffy sponsorship checkout, and
+  automatically fall back to `/contact` inside a fixed window before the season opener (3 weeks
+  for Touchdown Club tiers, 2 weeks for corporate — see `SEASON_KICKOFF_DATE` and the
+  `*_MINIMUM_DONATION_DATE` constants in `src/app/site-links.ts`). Update `SEASON_KICKOFF_DATE`
+  each year once the real season opener is set.
 
 Real data lives in dedicated modules: external links (donate, team calendar,
 official school pages) in `src/app/site-links.ts`, and the Touchdown Club

@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BUSINESS_SPONSORS_ZEFFY_URL, DONATE_URL, TOUCHDOWN_CLUB_ZEFFY_URL } from '../site-links';
+import {
+  BUSINESS_SPONSORS_ZEFFY_URL,
+  DONATE_URL,
+  SHOW_BUSINESS_SPONSORS_ZEFFY_LINK,
+  SHOW_TOUCHDOWN_CLUB_ZEFFY_LINK,
+  TOUCHDOWN_CLUB_ZEFFY_URL,
+} from '../site-links';
 import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TOUCHDOWN_CLUB_TIERS } from '../touchdown-club';
 
 @Component({
@@ -36,25 +42,43 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
                       <li class="mb-2"><i class="fa-solid fa-circle-check text-navy me-2"></i>{{ perk }}</li>
                     }
                   </ul>
-                  <a [href]="zeffyUrl" target="_blank" rel="noopener" class="btn btn-navy w-100 mt-2">
-                    Join for \${{ tier.price }}
-                  </a>
+                  @if (showCommunityZeffyLink) {
+                    <a [href]="communityZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy w-100 mt-2">
+                      Join for \${{ tier.price }}
+                    </a>
+                  } @else {
+                    <a routerLink="/contact" class="btn btn-navy w-100 mt-2">Contact Us</a>
+                  }
                 </div>
               </div>
             </div>
           }
         </div>
         <div class="text-center mt-4">
-          <a [href]="zeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
-            <i class="fa-solid fa-heart me-2"></i>Become a Community Support Sponsor
-          </a>
+          @if (showCommunityZeffyLink) {
+            <a [href]="communityZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
+              <i class="fa-solid fa-heart me-2"></i>Become a Community Support Sponsor
+            </a>
+          } @else {
+            <a routerLink="/contact" class="btn btn-navy btn-lg">
+              <i class="fa-solid fa-heart me-2"></i>Become a Community Support Sponsor
+            </a>
+          }
         </div>
-        <p class="small text-muted text-center mt-3 mb-0">
-          Tier checkout runs through Zeffy, our secure fundraising platform.
-          The Century Panther Touchdown Club is an official 501(c)(3) non-profit organization —
-          at the time of your donation you can opt in to receive a receipt for your generous donation.
-          Questions? <a routerLink="/contact">Contact the club</a>.
-        </p>
+        @if (showCommunityZeffyLink) {
+          <p class="small text-muted text-center mt-3 mb-0">
+            Tier checkout runs through Zeffy, our secure fundraising platform.
+            The Century Panther Touchdown Club is an official 501(c)(3) non-profit organization —
+            at the time of your donation you can opt in to receive a receipt for your generous donation.
+            Questions? <a routerLink="/contact">Contact the club</a>.
+          </p>
+        } @else {
+          <p class="small text-muted text-center mt-3 mb-0">
+            The Century Panther Touchdown Club is an official 501(c)(3) non-profit organization —
+            reach out and we'll get your tier set up, and you can opt in to receive a receipt
+            for your generous donation.
+          </p>
+        }
       </div>
     </section>
 
@@ -87,9 +111,15 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
           }
         </div>
         <div class="d-flex flex-wrap gap-2 justify-content-center">
-          <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
-            <i class="fa-solid fa-handshake me-2"></i>Become a corporate sponsor
-          </a>
+          @if (showBusinessZeffyLink) {
+            <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
+              <i class="fa-solid fa-handshake me-2"></i>Become a corporate sponsor
+            </a>
+          } @else {
+            <a routerLink="/contact" class="btn btn-navy btn-lg">
+              <i class="fa-solid fa-handshake me-2"></i>Become a corporate sponsor
+            </a>
+          }
           <a routerLink="/contact" class="btn btn-outline-navy btn-lg">
             <i class="fa-solid fa-envelope me-2"></i>Ask about benefits
           </a>
@@ -98,10 +128,17 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
           Interested in category exclusivity, co-branded merchandise, and premium activation?
           <a routerLink="/contact" class="fw-semibold">Ask about Panther Platinum Plus</a>.
         </p>
-        <p class="small text-center mb-0">
-          Sponsorships support an official 501(c)(3) non-profit organization — opt in at checkout
-          to receive a receipt for your contribution.
-        </p>
+        @if (showBusinessZeffyLink) {
+          <p class="small text-center mb-0">
+            Sponsorships support an official 501(c)(3) non-profit organization — opt in at checkout
+            to receive a receipt for your contribution.
+          </p>
+        } @else {
+          <p class="small text-center mb-0">
+            Sponsorships support an official 501(c)(3) non-profit organization — a receipt for
+            your contribution is available on request.
+          </p>
+        }
       </div>
     </section>
 
@@ -143,9 +180,15 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
           </table>
         </div>
         <div class="text-center mt-4">
-          <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-silver btn-lg">
-            <i class="fa-solid fa-handshake me-2"></i>Choose your package
-          </a>
+          @if (showBusinessZeffyLink) {
+            <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-silver btn-lg">
+              <i class="fa-solid fa-handshake me-2"></i>Choose your package
+            </a>
+          } @else {
+            <a routerLink="/contact" class="btn btn-silver btn-lg">
+              <i class="fa-solid fa-handshake me-2"></i>Choose your package
+            </a>
+          }
         </div>
       </div>
     </section>
@@ -288,8 +331,10 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
 })
 export class GetInvolvedComponent {
   donateUrl = DONATE_URL;
-  zeffyUrl = TOUCHDOWN_CLUB_ZEFFY_URL;
   businessZeffyUrl = BUSINESS_SPONSORS_ZEFFY_URL;
+  communityZeffyUrl = TOUCHDOWN_CLUB_ZEFFY_URL;
+  showBusinessZeffyLink = SHOW_BUSINESS_SPONSORS_ZEFFY_LINK;
+  showCommunityZeffyLink = SHOW_TOUCHDOWN_CLUB_ZEFFY_LINK;
   touchdownClubIntro = TOUCHDOWN_CLUB_INTRO;
   tiers = TOUCHDOWN_CLUB_TIERS;
   corporateTiers = CORPORATE_SPONSOR_TIERS;

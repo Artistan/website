@@ -26,6 +26,37 @@ export const TOUCHDOWN_CLUB_ZEFFY_URL =
 export const BUSINESS_SPONSORS_ZEFFY_URL =
   'https://www.zeffy.com/en-US/ticketing/century-panther-football-business-sponsorships?utm_source=centurypantherfootball';
 
+/**
+ * 2026 season opener. Sponsorship CTAs point at Zeffy checkout up until a fixed window
+ * before this date, then fall back to the Contact page — a late signup needs a personal
+ * check that the club can still deliver (program ad placement, signage, etc.) before
+ * kickoff rather than taking a Zeffy payment it may not be able to fulfill in time.
+ * Update this each year once the real season opener is set.
+ */
+const SEASON_KICKOFF_DATE = new Date(2026, 8, 3); // September 3, 2026 (month is 0-indexed)
+
+function weeksBefore(date: Date, weeks: number): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() - weeks * 7);
+  return result;
+}
+
+/** Touchdown Club (community support) CTAs switch to Zeffy up to 3 weeks before kickoff. */
+export const TOUCHDOWN_CLUB_MINIMUM_DONATION_DATE = weeksBefore(SEASON_KICKOFF_DATE, 3);
+
+/** Corporate sponsorship CTAs switch to Zeffy up to 2 weeks before kickoff. */
+export const BUSINESS_SPONSORS_MINIMUM_DONATION_DATE = weeksBefore(SEASON_KICKOFF_DATE, 2);
+
+/**
+ * True while Touchdown Club / corporate CTAs should point at Zeffy instead of Contact.
+ * This site prerenders to static HTML at build time (see angular.json), so the snapshot a
+ * crawler or pre-hydration visitor sees reflects the date at the last deploy — Angular
+ * hydration re-evaluates this client-side against the real date immediately after, which
+ * is what every actual visitor (this is a client-routed SPA already) ends up seeing.
+ */
+export const SHOW_TOUCHDOWN_CLUB_ZEFFY_LINK = new Date() < TOUCHDOWN_CLUB_MINIMUM_DONATION_DATE;
+export const SHOW_BUSINESS_SPONSORS_ZEFFY_LINK = new Date() < BUSINESS_SPONSORS_MINIMUM_DONATION_DATE;
+
 export const OFFICIAL_FOOTBALL_PAGE_URL =
   'https://www.centurypanthers.org/page/show/5060449?subseason=614343&tab=content';
 

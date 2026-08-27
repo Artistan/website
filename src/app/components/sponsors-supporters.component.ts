@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { BUSINESS_SPONSORS_ZEFFY_URL, TOUCHDOWN_CLUB_ZEFFY_URL } from '../site-links';
+import { RouterLink } from '@angular/router';
+import {
+  BUSINESS_SPONSORS_ZEFFY_URL,
+  SHOW_BUSINESS_SPONSORS_ZEFFY_LINK,
+  SHOW_TOUCHDOWN_CLUB_ZEFFY_LINK,
+  TOUCHDOWN_CLUB_ZEFFY_URL,
+} from '../site-links';
 
 /** A real corporate or coupon-card sponsor. `src` is omitted until a logo file is on hand. */
 interface RealSponsor {
@@ -113,6 +119,7 @@ const COMMUNITY_ROWS: SampleRow[] = [
 
 @Component({
   selector: 'app-sponsors-supporters',
+  imports: [RouterLink],
   template: `
     <section class="py-5">
       <div class="container">
@@ -127,9 +134,13 @@ const COMMUNITY_ROWS: SampleRow[] = [
 
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
           <h3 class="tier-row-heading h5 mb-0"><i class="fa-solid fa-handshake me-2"></i>Corporate Sponsors</h3>
-          <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-outline-navy btn-sm">
-            Become a Sponsor <i class="fa-solid fa-arrow-up-right-from-square fa-xs ms-1"></i>
-          </a>
+          @if (showBusinessZeffyLink) {
+            <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-outline-navy btn-sm">
+              Become a Sponsor <i class="fa-solid fa-arrow-up-right-from-square fa-xs ms-1"></i>
+            </a>
+          } @else {
+            <a routerLink="/contact" class="btn btn-outline-navy btn-sm">Become a Sponsor</a>
+          }
         </div>
         @for (row of corporateRows; track row.title) {
           <div class="small fw-semibold text-muted text-uppercase mb-2">{{ row.title }}</div>
@@ -166,17 +177,27 @@ const COMMUNITY_ROWS: SampleRow[] = [
         </div>
 
         <div class="text-center mb-4">
-          <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
-            <i class="fa-solid fa-handshake me-2"></i>Become a Corporate Sponsor
-          </a>
+          @if (showBusinessZeffyLink) {
+            <a [href]="businessZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
+              <i class="fa-solid fa-handshake me-2"></i>Become a Corporate Sponsor
+            </a>
+          } @else {
+            <a routerLink="/contact" class="btn btn-navy btn-lg">
+              <i class="fa-solid fa-handshake me-2"></i>Become a Corporate Sponsor
+            </a>
+          }
         </div>
 
         <!-- id="thank-you": the $50 tier promises digital recognition on the website Thank You section -->
         <div id="thank-you" class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 mt-5">
           <h3 class="tier-row-heading h5 mb-0"><i class="fa-solid fa-people-group me-2"></i>Panthers Community Support</h3>
-          <a [href]="communityZeffyUrl" target="_blank" rel="noopener" class="btn btn-outline-navy btn-sm">
-            Become a Sponsor <i class="fa-solid fa-arrow-up-right-from-square fa-xs ms-1"></i>
-          </a>
+          @if (showCommunityZeffyLink) {
+            <a [href]="communityZeffyUrl" target="_blank" rel="noopener" class="btn btn-outline-navy btn-sm">
+              Become a Sponsor <i class="fa-solid fa-arrow-up-right-from-square fa-xs ms-1"></i>
+            </a>
+          } @else {
+            <a routerLink="/contact" class="btn btn-outline-navy btn-sm">Become a Sponsor</a>
+          }
         </div>
         @for (row of communityRows; track row.title) {
           <div class="small fw-semibold text-muted text-uppercase mb-2">{{ row.title }}</div>
@@ -193,9 +214,15 @@ const COMMUNITY_ROWS: SampleRow[] = [
         }
 
         <div class="text-center mt-1">
-          <a [href]="communityZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
-            <i class="fa-solid fa-heart me-2"></i>Become a Community Support Sponsor
-          </a>
+          @if (showCommunityZeffyLink) {
+            <a [href]="communityZeffyUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
+              <i class="fa-solid fa-heart me-2"></i>Become a Community Support Sponsor
+            </a>
+          } @else {
+            <a routerLink="/contact" class="btn btn-navy btn-lg">
+              <i class="fa-solid fa-heart me-2"></i>Become a Community Support Sponsor
+            </a>
+          }
         </div>
       </div>
     </section>
@@ -208,4 +235,6 @@ export class SponsorsSupportersComponent {
   communityRows = COMMUNITY_ROWS;
   businessZeffyUrl = BUSINESS_SPONSORS_ZEFFY_URL;
   communityZeffyUrl = TOUCHDOWN_CLUB_ZEFFY_URL;
+  showBusinessZeffyLink = SHOW_BUSINESS_SPONSORS_ZEFFY_LINK;
+  showCommunityZeffyLink = SHOW_TOUCHDOWN_CLUB_ZEFFY_LINK;
 }
