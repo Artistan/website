@@ -1,9 +1,10 @@
 import { Component, computed, signal } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SponsorsSupportersComponent } from '../components/sponsors-supporters.component';
 import {
   COACHES,
   GAME_EVENTS,
-  GAME_INFO,
+  getFeaturedGame,
   PROGRAM_DATA_IS_PLACEHOLDER,
   Player,
   ROSTER,
@@ -32,8 +33,8 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
         @if (isPlaceholder) {
           <div class="alert alert-warning small" role="alert">
             <i class="fa-solid fa-triangle-exclamation me-2"></i>
-            Sample layout — the 2026 roster, coaching staff, and game details will be published
-            here before the season opener.
+            Sample layout — the 2026 roster and coaching staff will be published here before the
+            season opener.
           </div>
         }
         <div class="card card-panther">
@@ -49,27 +50,45 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
                 </div>
               </div>
               <div class="col-lg-4 text-lg-end">
-                <span class="badge badge-home fs-6 px-3 py-2">
-                  <i class="fa-solid fa-star me-1"></i>{{ game.theme }}
+                <span class="badge fs-6 px-3 py-2" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
+                  <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home Game' : 'Away Game' }}
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="row gy-4 mt-1">
-          @for (event of events; track event.title) {
-            <div class="col-md-4">
-              <div class="card card-panther h-100">
-                <div class="card-body">
-                  <div class="icon-badge mb-3"><i [class]="event.icon"></i></div>
-                  <h3 class="h6 fw-bold">{{ event.title }}</h3>
-                  <p class="small text-muted mb-0">{{ event.text }}</p>
+        @if (game.isHome) {
+          <div class="row gy-4 mt-1">
+            @for (event of events; track event.title) {
+              <div class="col-md-4">
+                <div class="card card-panther h-100">
+                  <div class="card-body">
+                    <div class="icon-badge mb-3"><i [class]="event.icon"></i></div>
+                    <h3 class="h6 fw-bold">{{ event.title }}</h3>
+                    <p class="small text-muted mb-0">{{ event.text }}</p>
+                  </div>
                 </div>
               </div>
+            }
+          </div>
+        } @else if (mapEmbedUrl) {
+          <div class="card card-panther mt-4">
+            <div class="card-body">
+              <h3 class="h6 fw-bold mb-3">
+                <i class="fa-solid fa-map-location-dot text-navy me-2"></i>Getting to {{ game.opponent }}
+              </h3>
+              <div class="ratio ratio-21x9 rounded border">
+                <iframe
+                  [src]="mapEmbedUrl"
+                  style="border: 0;"
+                  [title]="game.opponent + ' football field map'"
+                  loading="lazy">
+                </iframe>
+              </div>
             </div>
-          }
-        </div>
+          </div>
+        }
       </div>
     </section>
 
@@ -152,9 +171,17 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
 })
 export class ProgramComponent {
   isPlaceholder = PROGRAM_DATA_IS_PLACEHOLDER;
-  game = GAME_INFO;
+  game = getFeaturedGame();
   events = GAME_EVENTS;
   coaches = COACHES;
+  mapEmbedUrl: SafeResourceUrl | null = null;
+
+  constructor(private sanitizer: DomSanitizer) {
+    if (!this.game.isHome && this.game.mapQuery) {
+      const src = `https://www.google.com/maps?q=${encodeURIComponent(this.game.mapQuery)}&output=embed`;
+      this.mapEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(src);
+    }
+  }
 
   columns: { key: SortKey; label: string }[] = [
     { key: 'number', label: '#' },
