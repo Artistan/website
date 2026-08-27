@@ -97,6 +97,14 @@ body {
   padding: 0.15rem;
 }
 
+.navbar-panther .navbar-brand .brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 2.4rem; /* matches .brand-logo so the stacked lines fit its height */
+  line-height: 1.2rem;
+}
+
 /* ---------- hero ---------- */
 .hero-panther {
   position: relative;
