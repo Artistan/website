@@ -65,7 +65,8 @@ function corporateSponsorRow(tierIndex: number, title: string, sponsors: RealSpo
 
 /** Real 2026 corporate sponsors, grouped by their Panther sponsorship tier (highest first). */
 const CORPORATE_ROWS: SponsorRow[] = [
-  corporateSponsorRow(0, 'Platinum Sponsors', [{ src: '/sponsors/hyvee.png', name: 'Hy-Vee' }]),
+  corporateSponsorRow(0, 'Panther Fuel Platinum Partner', [{ src: '/sponsors/hyvee.png', name: 'Hy-Vee' }]),
+  corporateSponsorRow(0, 'Platinum Sponsors', []),
   corporateSponsorRow(1, 'Gold Sponsors', [{ src: '/sponsors/LakesideDental.png', name: 'Lakeside Dentistry' }]),
   corporateSponsorRow(2, 'Silver Sponsors', [{ src: '/sponsors/VFW-1215.png', name: 'VFW Post 1215' }]),
   corporateSponsorRow(3, 'Bronze Sponsors', [
