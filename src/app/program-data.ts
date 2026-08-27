@@ -17,6 +17,8 @@ export interface GameInfo {
   isHome: boolean;
   /** Google Maps search query for the opponent's football field (away games only). */
   mapQuery?: string;
+  /** Opponent mascot logo, cropped from public/Schedule.svg. */
+  logo: string;
 }
 
 export interface GameEvent {
@@ -50,6 +52,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     location: 'At Tartan High School',
     isHome: false,
     mapQuery: 'Tartan High School, Oakdale, MN',
+    logo: 'opponent-logos/tartan.png',
   },
   {
     opponent: 'Chaska',
@@ -58,6 +61,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     kickoff: '7:00 PM',
     location: 'Century High School Stadium',
     isHome: true,
+    logo: 'opponent-logos/chaska.png',
   },
   {
     opponent: 'Owatonna',
@@ -67,6 +71,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     location: 'At Owatonna High School',
     isHome: false,
     mapQuery: 'Owatonna High School, Owatonna, MN',
+    logo: 'opponent-logos/owatonna.png',
   },
   {
     opponent: 'Rochester John Marshall',
@@ -76,6 +81,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     location: 'At Rochester John Marshall High School',
     isHome: false,
     mapQuery: 'John Marshall High School, Rochester, MN',
+    logo: 'opponent-logos/roch-jm.png',
   },
   {
     opponent: 'Rochester Mayo',
@@ -85,6 +91,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     location: 'At Rochester Mayo High School',
     isHome: false,
     mapQuery: 'Mayo High School, Rochester, MN',
+    logo: 'opponent-logos/roch-mayo.png',
   },
   {
     opponent: 'New Prague',
@@ -93,6 +100,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     kickoff: '7:00 PM',
     location: 'Century High School Stadium',
     isHome: true,
+    logo: 'opponent-logos/new-prague.png',
   },
   {
     opponent: 'Northfield',
@@ -102,6 +110,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     location: 'At Northfield High School',
     isHome: false,
     mapQuery: 'Northfield High School, Northfield, MN',
+    logo: 'opponent-logos/northfield.png',
   },
   {
     opponent: 'Winona',
@@ -110,6 +119,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     kickoff: '7:00 PM',
     location: 'Century High School Stadium',
     isHome: true,
+    logo: 'opponent-logos/winona.png',
   },
 ];
 

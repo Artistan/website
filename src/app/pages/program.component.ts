@@ -1,14 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SponsorsSupportersComponent } from '../components/sponsors-supporters.component';
-import {
-  COACHES,
-  GAME_EVENTS,
-  getFeaturedGame,
-  PROGRAM_DATA_IS_PLACEHOLDER,
-  Player,
-  ROSTER,
-} from '../program-data';
+import { COACHES, GAME_EVENTS, getFeaturedGame, Player, ROSTER } from '../program-data';
 
 type SortKey = 'number' | 'name' | 'position' | 'grade';
 
@@ -30,26 +23,23 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
     <!-- This week's game -->
     <section class="py-5">
       <div class="container">
-        @if (isPlaceholder) {
-          <div class="alert alert-warning small" role="alert">
-            <i class="fa-solid fa-triangle-exclamation me-2"></i>
-            Sample layout — the 2026 roster and coaching staff will be published here before the
-            season opener.
-          </div>
-        }
         <div class="card card-panther">
           <div class="card-body p-4">
             <div class="row align-items-center gy-3">
               <div class="col-lg-8">
                 <div class="section-kicker mb-1">This week</div>
-                <h2 class="display-font h2 mb-2">Panthers vs. {{ game.opponent }}</h2>
+                <div class="d-flex align-items-center gap-3 mb-2">
+                  <img src="CenturyPantherFootball.jpg" alt="Century Panthers logo" class="matchup-logo">
+                  <h2 class="display-font h2 mb-0">Panthers vs. {{ game.opponent }}</h2>
+                  <img [src]="game.logo" [alt]="game.opponent + ' logo'" class="matchup-logo">
+                </div>
                 <div class="d-flex flex-wrap gap-4 small text-muted">
                   <span><i class="fa-solid fa-calendar-days text-navy me-2"></i>{{ game.date }}</span>
                   <span><i class="fa-solid fa-clock text-navy me-2"></i>Kickoff {{ game.kickoff }}</span>
                   <span><i class="fa-solid fa-location-dot text-navy me-2"></i>{{ game.location }}</span>
                 </div>
               </div>
-              <div class="col-lg-4 text-lg-end">
+              <div class="col-lg-4 text-end">
                 <span class="badge fs-6 px-3 py-2" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
                   <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home Game' : 'Away Game' }}
                 </span>
@@ -170,7 +160,6 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
   `,
 })
 export class ProgramComponent {
-  isPlaceholder = PROGRAM_DATA_IS_PLACEHOLDER;
   game = getFeaturedGame();
   events = GAME_EVENTS;
   coaches = COACHES;

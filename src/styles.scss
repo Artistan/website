@@ -137,6 +137,13 @@ body {
   box-shadow: 0 0.75rem 2rem rgba(8, 21, 39, 0.55);
 }
 
+.matchup-logo {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .text-silver {
   color: var(--panther-silver) !important;
 }
