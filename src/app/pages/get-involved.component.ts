@@ -1,17 +1,20 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
+  BUSINESS_SPONSORS_MINIMUM_DONATION_DATE,
   BUSINESS_SPONSORS_ZEFFY_URL,
   DONATE_URL,
   SHOW_BUSINESS_SPONSORS_ZEFFY_LINK,
   SHOW_TOUCHDOWN_CLUB_ZEFFY_LINK,
+  TOUCHDOWN_CLUB_MINIMUM_DONATION_DATE,
   TOUCHDOWN_CLUB_ZEFFY_URL,
 } from '../site-links';
 import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TOUCHDOWN_CLUB_TIERS } from '../touchdown-club';
 
 @Component({
   selector: 'app-get-involved',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   template: `
     <section class="hero-panther py-5">
       <div class="container hero-inner">
@@ -28,7 +31,17 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
           <div class="section-kicker mb-2">Touchdown Club</div>
           <h2 class="display-font h1">Panthers Community Support Tiers</h2>
           <p class="text-muted mx-auto" style="max-width: 46rem;">{{ touchdownClubIntro }}</p>
+          <p class="small fw-semibold text-navy mb-0">
+            Sponsor before {{ communityDeadlineDate | date: 'longDate' }} for these incentives.
+          </p>
         </div>
+        @if (!showCommunityZeffyLink) {
+          <div class="alert alert-warning small" role="alert">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            <strong>Deadline Expired</strong> Additional Incentives for Sponsorships may not be
+            available this season. - Contact us for sponsorship opportunities.
+          </div>
+        }
         <div class="row gy-4 justify-content-center">
           @for (tier of tiers; track tier.name) {
             <div class="col-md-6 col-lg-3">
@@ -91,6 +104,16 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
           Put your business behind Panther football with a season sponsorship — stadium
           visibility, program placement, and a community that shops its sponsors.
         </p>
+        <p class="small fw-semibold text-navy">
+          Sponsor before {{ businessDeadlineDate | date: 'longDate' }} for these incentives.
+        </p>
+        @if (!showBusinessZeffyLink) {
+          <div class="alert alert-warning small text-start" role="alert">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            <strong>Deadline Expired</strong> Additional Incentives for Sponsorships may not be
+            available this season. - Contact us for sponsorship opportunities.
+          </div>
+        }
         <div class="row gy-4 justify-content-center mb-4">
           @for (tier of corporateTiers; track tier.name) {
             <div class="col-md-6 col-lg-3">
@@ -335,6 +358,8 @@ export class GetInvolvedComponent {
   communityZeffyUrl = TOUCHDOWN_CLUB_ZEFFY_URL;
   showBusinessZeffyLink = SHOW_BUSINESS_SPONSORS_ZEFFY_LINK;
   showCommunityZeffyLink = SHOW_TOUCHDOWN_CLUB_ZEFFY_LINK;
+  businessDeadlineDate = BUSINESS_SPONSORS_MINIMUM_DONATION_DATE;
+  communityDeadlineDate = TOUCHDOWN_CLUB_MINIMUM_DONATION_DATE;
   touchdownClubIntro = TOUCHDOWN_CLUB_INTRO;
   tiers = TOUCHDOWN_CLUB_TIERS;
   corporateTiers = CORPORATE_SPONSOR_TIERS;
