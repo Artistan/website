@@ -23,7 +23,11 @@ interface SponsorRow {
 
 interface PersonBox {
   icon: string;
-  name: string;
+  /** Placeholder label (e.g. "Your Name Here") — mutually exclusive with firstNames/lastName. */
+  name?: string;
+  /** Real supporter's first name(s), shown stacked above lastName (e.g. "John & Jane"). */
+  firstNames?: string;
+  lastName?: string;
 }
 
 interface SampleRow {
@@ -37,6 +41,16 @@ function personBoxes(count: number): PersonBox[] {
     icon: 'fa-solid fa-circle-user',
     name: 'Your Name Here',
   }));
+}
+
+/** A real individual supporter — first name(s) stack above the last name. */
+function individualSupporter(firstNames: string, lastName: string): PersonBox {
+  return { icon: 'fa-solid fa-circle-user', firstNames, lastName };
+}
+
+/** A real supporting family — first name(s) stack above the shared last name. */
+function familySupporter(firstNames: string, lastName: string): PersonBox {
+  return { icon: 'fa-solid fa-people-roof', firstNames, lastName };
 }
 
 /**
@@ -112,10 +126,14 @@ function communityRow(tierIndex: number, title: string, boxes: PersonBox[]): Sam
 }
 
 const COMMUNITY_ROWS: SampleRow[] = [
-  communityRow(0, 'Legacy Builders', personBoxes(2)),
-  communityRow(1, 'Century Champions', personBoxes(4)),
-  communityRow(2, 'Prowl Backers', personBoxes(8)),
-  communityRow(3, 'Home Field Supporters', personBoxes(16)),
+  communityRow(0, 'Legacy Builders', [
+    familySupporter('Elizabeth & Patrick', 'Rice'),
+    familySupporter('Jane & Eric', 'Peterson'),
+    familySupporter('Heidi & Ed', 'Elliott'),
+  ]),
+  communityRow(1, 'Century Champions', []),
+  communityRow(2, 'Prowl Backers', []),
+  communityRow(3, 'Home Field Supporters', []),
 ];
 
 @Component({
@@ -144,21 +162,23 @@ const COMMUNITY_ROWS: SampleRow[] = [
           }
         </div>
         @for (row of corporateRows; track row.title) {
-          <div class="small fw-semibold text-muted text-uppercase mb-2">{{ row.title }}</div>
-          <div class="row g-3 mb-4" [class]="row.rowCols">
-            @for (sponsor of row.sponsors; track sponsor.name) {
-              <div class="col">
-                <div class="sponsor-logo-box" [class.sponsor-logo-box--dark]="sponsor.dark">
-                  @if (sponsor.src) {
-                    <img [src]="sponsor.src" [alt]="sponsor.name" class="sponsor-logo-img" />
-                  } @else {
-                    <i class="fa-solid fa-building"></i>
-                  }
-                  <span class="small fw-semibold">{{ sponsor.name }}</span>
+          @if (row.sponsors.length > 0) {
+            <div class="small fw-semibold text-muted text-uppercase mb-2">{{ row.title }}</div>
+            <div class="row g-3 mb-4" [class]="row.rowCols">
+              @for (sponsor of row.sponsors; track sponsor.name) {
+                <div class="col">
+                  <div class="sponsor-logo-box" [class.sponsor-logo-box--dark]="sponsor.dark">
+                    @if (sponsor.src) {
+                      <img [src]="sponsor.src" [alt]="sponsor.name" class="sponsor-logo-img" />
+                    } @else {
+                      <i class="fa-solid fa-building"></i>
+                    }
+                    <span class="small fw-semibold">{{ sponsor.name }}</span>
+                  </div>
                 </div>
-              </div>
-            }
-          </div>
+              }
+            </div>
+          }
         }
 
         <div class="small fw-semibold text-muted text-uppercase mb-2">Coupon Card Sponsors</div>
@@ -201,17 +221,29 @@ const COMMUNITY_ROWS: SampleRow[] = [
           }
         </div>
         @for (row of communityRows; track row.title) {
-          <div class="small fw-semibold text-muted text-uppercase mb-2">{{ row.title }}</div>
-          <div class="row g-3 mb-4" [class]="row.rowCols">
-            @for (box of row.boxes; track $index) {
-              <div class="col">
-                <div class="sample-box">
-                  <i [class]="box.icon"></i>
-                  <span class="fw-semibold">{{ box.name }}</span>
+          @if (row.boxes.length > 0) {
+            <div class="small fw-semibold text-muted text-uppercase mb-2">{{ row.title }}</div>
+            <div class="row g-3 mb-4" [class]="row.rowCols">
+              @for (box of row.boxes; track $index) {
+                <div class="col">
+                  @if (box.firstNames) {
+                    <div class="supporter-box">
+                      <i [class]="box.icon"></i>
+                      <span class="supporter-name">
+                        <span class="supporter-first">{{ box.firstNames }}</span>
+                        <span class="supporter-last">{{ box.lastName }}</span>
+                      </span>
+                    </div>
+                  } @else {
+                    <div class="sample-box">
+                      <i [class]="box.icon"></i>
+                      <span class="fw-semibold">{{ box.name }}</span>
+                    </div>
+                  }
                 </div>
-              </div>
-            }
-          </div>
+              }
+            </div>
+          }
         }
 
         <div class="text-center mt-1">
