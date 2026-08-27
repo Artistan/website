@@ -1,84 +1,114 @@
 import { Component } from '@angular/core';
 import { BUSINESS_SPONSORS_ZEFFY_URL, TOUCHDOWN_CLUB_ZEFFY_URL } from '../site-links';
 
-interface SampleBox {
-  /** 'logo' renders a greyed-out fake corporation mark; 'placeholder' renders the your-logo/your-name slot. */
-  kind: 'logo' | 'placeholder' | 'person';
-  icon: string;
-  name: string;
-}
-
-interface TierRow {
-  title: string;
-  size: 'sample-lg' | 'sample-md' | 'sample-sm' | 'sample-xs';
-  rowCols: string;
-  boxes: SampleBox[];
-}
-
-interface CouponCardSponsor {
-  src: string;
+/** A real corporate or coupon-card sponsor. `src` is omitted until a logo file is on hand. */
+interface RealSponsor {
+  src?: string;
   name: string;
   /** True when the logo's artwork is light/transparent and washes out on a white card. */
   dark?: boolean;
 }
 
-/** Obviously-fictional greyed-out corporations for the sample logo slots. */
-const FAKE_LOGOS: { icon: string; name: string }[] = [
-  { icon: 'fa-solid fa-car', name: 'Acme Motors' },
-  { icon: 'fa-solid fa-building-columns', name: 'Summit Bank' },
-  { icon: 'fa-solid fa-pizza-slice', name: 'River Valley Pizza' },
-  { icon: 'fa-solid fa-tooth', name: 'North Star Dental' },
-  { icon: 'fa-solid fa-house', name: 'Bluff Country Realty' },
-  { icon: 'fa-solid fa-mug-hot', name: 'Med City Coffee' },
-  { icon: 'fa-solid fa-tractor', name: 'Valley View Farms' },
-  { icon: 'fa-solid fa-shield', name: 'Golden Field Insurance' },
-  { icon: 'fa-solid fa-scale-balanced', name: 'Maple Grove Law' },
-  { icon: 'fa-solid fa-microchip', name: 'Harbor Lights Tech' },
-  { icon: 'fa-solid fa-hammer', name: 'Rock Solid Builders' },
-  { icon: 'fa-solid fa-seedling', name: 'Green Acres Landscaping' },
-];
-
-/** Alternate greyed fake logos with your-logo-here placeholders. */
-function corporateBoxes(count: number, offset: number): SampleBox[] {
-  return Array.from({ length: count }, (_, i) =>
-    i % 2 === 0
-      ? { kind: 'logo' as const, ...FAKE_LOGOS[(offset + i / 2) % FAKE_LOGOS.length] }
-      : { kind: 'placeholder' as const, icon: 'fa-solid fa-image', name: 'Your Name Here' },
-  );
+interface SponsorRow {
+  title: string;
+  rowCols: string;
+  sponsors: RealSponsor[];
 }
 
-function personBoxes(count: number): SampleBox[] {
+interface PersonBox {
+  icon: string;
+  name: string;
+}
+
+interface SampleRow {
+  title: string;
+  rowCols: string;
+  boxes: PersonBox[];
+}
+
+function personBoxes(count: number): PersonBox[] {
   return Array.from({ length: count }, () => ({
-    kind: 'person' as const,
     icon: 'fa-solid fa-circle-user',
     name: 'Your Name Here',
   }));
 }
 
-const CORPORATE_ROWS: TierRow[] = [
-  { title: 'Platinum Sponsors', size: 'sample-lg', rowCols: 'row-cols-1 row-cols-md-2', boxes: corporateBoxes(2, 0) },
-  { title: 'Gold Sponsors', size: 'sample-md', rowCols: 'row-cols-2 row-cols-md-4', boxes: corporateBoxes(4, 1) },
-  { title: 'Silver Sponsors', size: 'sample-sm', rowCols: 'row-cols-2 row-cols-md-4', boxes: corporateBoxes(8, 3) },
-  { title: 'Bronze Sponsors', size: 'sample-xs', rowCols: 'row-cols-3 row-cols-md-6', boxes: corporateBoxes(12, 7) },
+/**
+ * Card width (out of 12) for tier `tierIndex` in `ladder`, given how many items are in it.
+ * Entry `i` is a tier's width when it has exactly one item; once a second item joins, the card
+ * steps down to entry `i + 1` — the same width the next tier down starts at. This keeps every
+ * tier visibly smaller than the one above it, and steps down again once it fills in.
+ */
+function tierRowCols(ladder: number[], tierIndex: number, itemCount: number): string {
+  const isSingle = itemCount === 1;
+  const width = ladder[Math.min(isSingle ? tierIndex : tierIndex + 1, ladder.length - 1)];
+  const desktopCols = 12 / width;
+  const mobileCols = isSingle ? 1 : 2;
+  return `row-cols-${mobileCols} row-cols-md-${desktopCols} justify-content-center`;
+}
+
+/**
+ * Ladder for the corporate tiers, Platinum first. Floors out at col-2 (six per row) since a
+ * narrower card can't fit a logo.
+ */
+const CORPORATE_WIDTH_LADDER = [12, 6, 4, 3, 2, 2, 2, 2];
+
+function corporateSponsorRow(tierIndex: number, title: string, sponsors: RealSponsor[]): SponsorRow {
+  return { title, sponsors, rowCols: tierRowCols(CORPORATE_WIDTH_LADDER, tierIndex, sponsors.length) };
+}
+
+/** Real 2026 corporate sponsors, grouped by their Panther sponsorship tier (highest first). */
+const CORPORATE_ROWS: SponsorRow[] = [
+  corporateSponsorRow(0, 'Platinum Sponsors', [{ src: '/sponsors/hyvee.png', name: 'Hy-Vee' }]),
+  corporateSponsorRow(1, 'Gold Sponsors', [{ src: '/sponsors/LakesideDental.png', name: 'Lakeside Dentistry' }]),
+  corporateSponsorRow(2, 'Silver Sponsors', [{ src: '/sponsors/VFW-1215.png', name: 'VFW Post 1215' }]),
+  corporateSponsorRow(3, 'Bronze Sponsors', [
+    { name: 'Alerus' },
+    { name: 'Atlas Insurance' },
+    { name: 'Archkey Technologies' },
+    { src: '/sponsors/BearArms.png', name: 'Bear Arms' },
+    { name: 'Bowlocity' },
+    { src: '/sponsors/MC_STACKED_BLACK_RGB_CLEAR.png', name: 'Mayo Clinic' },
+  ]),
+  corporateSponsorRow(4, 'Iron Sponsors', [{ name: 'EDI Driving School' }, { name: 'Superior Screeners' }]),
+  corporateSponsorRow(5, 'Panther Fuel Sponsors', [
+    { name: 'Chick-fil-A' },
+    { src: '/sponsors/WestEndBlends.jpg', name: 'West End Blends' },
+  ]),
+  corporateSponsorRow(6, '5th Quarter Sponsor', [{ src: '/sponsors/Tavern 22.jpg', name: 'Tavern 22' }]),
 ];
 
 /** Real sponsor logos for the Coupon Card fundraiser, served from public/sponsors/coupon-card. */
-const COUPON_CARD_SPONSORS: CouponCardSponsor[] = [
+const COUPON_CARD_SPONSORS: RealSponsor[] = [
+  { name: "BB's Pizzaria" },
   { src: '/sponsors/coupon-card/Blue Lagoon.png', name: 'Blue Lagoon' },
-  { src: '/sponsors/coupon-card/KwikTrip.png', name: 'KwikTrip' },
-  { src: '/sponsors/coupon-card/Newts.png', name: 'Newts' },
+  { src: '/sponsors/coupon-card/KwikTrip.png', name: 'Kwik Trip' },
+  { src: '/sponsors/coupon-card/YellowArch.png', name: "McDonald's®" },
+  { src: '/sponsors/coupon-card/Newts.png', name: "Newt's" },
   { src: '/sponsors/coupon-card/Purple Goat.png', name: 'Purple Goat' },
+  { src: '/sponsors/coupon-card/Workshop.png', name: 'The Workshop' },
   { src: '/sponsors/coupon-card/Two Sisters.png', name: 'Two Sisters', dark: true },
   { src: '/sponsors/coupon-card/Wildwood.jpg', name: 'Wildwood' },
-  { src: '/sponsors/coupon-card/Workshop.png', name: 'Workshop' },
-  { src: '/sponsors/coupon-card/YellowArch.png', name: 'McDonald\'s®' },
 ];
 
-const COMMUNITY_ROWS: TierRow[] = [
-  { title: 'Legacy Builders', size: 'sample-lg', rowCols: 'row-cols-1 row-cols-md-2', boxes: personBoxes(2) },
-  { title: 'Century Champions', size: 'sample-md', rowCols: 'row-cols-2 row-cols-md-4', boxes: personBoxes(4) },
-  { title: 'Prowl Backers', size: 'sample-sm', rowCols: 'row-cols-2 row-cols-md-4', boxes: personBoxes(8) },
-  { title: 'Home Field Supporters', size: 'sample-xs', rowCols: 'row-cols-2 row-cols-md-4', boxes: personBoxes(16) },
+/** Coupon Card sits below the tier ladder, at its floor width (col-2, six per row). */
+const COUPON_CARD_ROW_COLS = 'row-cols-2 row-cols-md-6 justify-content-center';
+
+/**
+ * Ladder for the community tiers, Legacy Builders first. Index 0 is never used — every
+ * community tier's sample row has more than one box — so it just mirrors index 1.
+ */
+const COMMUNITY_WIDTH_LADDER = [6, 6, 4, 3, 2];
+
+function communityRow(tierIndex: number, title: string, boxes: PersonBox[]): SampleRow {
+  return { title, boxes, rowCols: tierRowCols(COMMUNITY_WIDTH_LADDER, tierIndex, boxes.length) };
+}
+
+const COMMUNITY_ROWS: SampleRow[] = [
+  communityRow(0, 'Legacy Builders', personBoxes(2)),
+  communityRow(1, 'Century Champions', personBoxes(4)),
+  communityRow(2, 'Prowl Backers', personBoxes(8)),
+  communityRow(3, 'Home Field Supporters', personBoxes(16)),
 ];
 
 @Component({
@@ -90,8 +120,8 @@ const COMMUNITY_ROWS: TierRow[] = [
           <div class="section-kicker mb-2">They make Friday nights possible</div>
           <h2 class="display-font h1">Sponsors &amp; Supporters</h2>
           <p class="text-muted mx-auto" style="max-width: 42rem;">
-            Sample layout — sponsor logos and supporter names will fill these spots as the
-            2026 season campaign kicks off. Your business or family could be here.
+            Our 2026 corporate sponsors below — the Panthers Community Support spots are a
+            sample layout until real names and logos fill them in as the season campaign kicks off.
           </p>
         </div>
 
@@ -104,17 +134,15 @@ const COMMUNITY_ROWS: TierRow[] = [
         @for (row of corporateRows; track row.title) {
           <div class="small fw-semibold text-muted text-uppercase mb-2">{{ row.title }}</div>
           <div class="row g-3 mb-4" [class]="row.rowCols">
-            @for (box of row.boxes; track $index) {
+            @for (sponsor of row.sponsors; track sponsor.name) {
               <div class="col">
-                <div class="sample-box" [class]="row.size">
-                  <i [class]="box.icon"></i>
-                  @if (box.kind === 'logo') {
-                    <span class="fake-logo">{{ box.name }}</span>
-                    <span class="small">(sample)</span>
+                <div class="sponsor-logo-box" [class.sponsor-logo-box--dark]="sponsor.dark">
+                  @if (sponsor.src) {
+                    <img [src]="sponsor.src" [alt]="sponsor.name" class="sponsor-logo-img" />
                   } @else {
-                    <span class="small">(your logo here)</span>
-                    <span class="fw-semibold">{{ box.name }}</span>
+                    <i class="fa-solid fa-building"></i>
                   }
+                  <span class="small fw-semibold">{{ sponsor.name }}</span>
                 </div>
               </div>
             }
@@ -122,11 +150,15 @@ const COMMUNITY_ROWS: TierRow[] = [
         }
 
         <div class="small fw-semibold text-muted text-uppercase mb-2">Coupon Card Sponsors</div>
-        <div class="row g-3 mb-4 row-cols-3 row-cols-md-6">
+        <div class="row g-3 mb-4" [class]="couponCardRowCols">
           @for (sponsor of couponCardSponsors; track sponsor.name) {
             <div class="col">
               <div class="sponsor-logo-box" [class.sponsor-logo-box--dark]="sponsor.dark">
-                <img [src]="sponsor.src" [alt]="sponsor.name" class="sponsor-logo-img" />
+                @if (sponsor.src) {
+                  <img [src]="sponsor.src" [alt]="sponsor.name" class="sponsor-logo-img" />
+                } @else {
+                  <i class="fa-solid fa-building"></i>
+                }
                 <span class="small fw-semibold">{{ sponsor.name }}</span>
               </div>
             </div>
@@ -151,7 +183,7 @@ const COMMUNITY_ROWS: TierRow[] = [
           <div class="row g-3 mb-4" [class]="row.rowCols">
             @for (box of row.boxes; track $index) {
               <div class="col">
-                <div class="sample-box" [class]="row.size">
+                <div class="sample-box">
                   <i [class]="box.icon"></i>
                   <span class="fw-semibold">{{ box.name }}</span>
                 </div>
@@ -172,6 +204,7 @@ const COMMUNITY_ROWS: TierRow[] = [
 export class SponsorsSupportersComponent {
   corporateRows = CORPORATE_ROWS;
   couponCardSponsors = COUPON_CARD_SPONSORS;
+  couponCardRowCols = COUPON_CARD_ROW_COLS;
   communityRows = COMMUNITY_ROWS;
   businessZeffyUrl = BUSINESS_SPONSORS_ZEFFY_URL;
   communityZeffyUrl = TOUCHDOWN_CLUB_ZEFFY_URL;

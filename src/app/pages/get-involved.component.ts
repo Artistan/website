@@ -122,9 +122,10 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
               <tr>
                 <th scope="col">Benefit</th>
                 <th scope="col">Platinum $4,000</th>
-                <th scope="col">Gold $3,500</th>
-                <th scope="col">Silver $2,500</th>
-                <th scope="col">Bronze $1,500</th>
+                <th scope="col">Gold $2,500</th>
+                <th scope="col">Silver $1,500</th>
+                <th scope="col">Bronze $500</th>
+                <th scope="col">Iron $250</th>
               </tr>
             </thead>
             <tbody>
@@ -135,6 +136,7 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
                   <td>{{ row.gold }}</td>
                   <td>{{ row.silver }}</td>
                   <td>{{ row.bronze }}</td>
+                  <td>{{ row.iron }}</td>
                 </tr>
               }
             </tbody>
@@ -184,6 +186,49 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
                 <p class="small text-muted mb-0">
                   Flexible scope: sponsor the full season or a single piece, with contributions
                   sized to your capacity.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specialty & in-kind partnerships: 5th Quarter -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row align-items-center gy-4">
+          <div class="col-lg-6">
+            <div class="section-kicker mb-2">Specialty partnerships</div>
+            <h2 class="display-font h2 mb-3">5th Quarter Sponsor</h2>
+            <p class="text-muted">
+              The game doesn't end at the final whistle. Our 5th Quarter partnership
+              sponsors the official post-game gathering spot where players, families,
+              and fans keep Friday night going.
+            </p>
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fa-solid fa-mug-hot text-navy me-2"></i>Host the official post-game gathering</li>
+              <li class="mb-2"><i class="fa-solid fa-bullhorn text-navy me-2"></i>PA shout-out and program recognition</li>
+              <li class="mb-2"><i class="fa-solid fa-share-nodes text-navy me-2"></i>Social media shout-outs all season long</li>
+            </ul>
+            <p class="small text-muted">
+              Partners get logo placement, game-day announcements, social media shout-outs,
+              and recognition in team communications all season long.
+            </p>
+            <a routerLink="/contact" class="btn btn-navy">
+              <i class="fa-solid fa-envelope me-2"></i>Ask about the 5th Quarter
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <div class="card card-panther">
+              <div class="card-body p-4">
+                <h3 class="h5 fw-bold mb-3"><i class="fa-solid fa-store text-navy me-2"></i>Perfect for</h3>
+                <p class="small text-muted mb-2">
+                  Restaurants, bars, and venues that want to be where Panther Nation
+                  heads after the game.
+                </p>
+                <p class="small text-muted mb-0">
+                  Flexible scope: sponsor the full season or select home games.
                 </p>
               </div>
             </div>

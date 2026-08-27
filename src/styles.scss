@@ -180,46 +180,8 @@ body {
   padding: 1rem 0.5rem;
 }
 
-.sample-box .fake-logo {
-  filter: grayscale(1);
-  opacity: 0.55;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-}
-
-.sample-box.sample-lg {
-  padding: 2.5rem 1rem;
-  font-size: 1.1rem;
-}
-
-.sample-box.sample-lg i {
-  font-size: 3rem;
-}
-
-.sample-box.sample-md {
-  padding: 1.75rem 0.75rem;
-}
-
-.sample-box.sample-md i {
-  font-size: 2rem;
-}
-
-.sample-box.sample-sm {
-  padding: 1rem 0.5rem;
-  font-size: 0.85rem;
-}
-
-.sample-box.sample-sm i {
-  font-size: 1.4rem;
-}
-
-.sample-box.sample-xs {
-  padding: 0.6rem 0.4rem;
-  font-size: 0.75rem;
-}
-
-.sample-box.sample-xs i {
-  font-size: 1rem;
+.sample-box i {
+  font-size: 1.75rem;
 }
 
 .sponsor-logo-box {
@@ -236,8 +198,8 @@ body {
 }
 
 .sponsor-logo-box .sponsor-logo-img {
-  max-width: 100%;
-  max-height: 3.5rem;
+  width: 90%;
+  margin: 0 5%;
   object-fit: contain;
 }
 

@@ -22,8 +22,17 @@ export const TOUCHDOWN_CLUB_INTRO =
  */
 export const CORPORATE_SPONSOR_TIERS: SupportTier[] = [
   {
+    name: 'Panther Iron',
+    price: 250,
+    icon: 'fa-solid fa-industry',
+    perks: [
+      'Recognition on the team website sponsor page',
+      'Name listed in the program sponsor roll call',
+    ],
+  },
+  {
     name: 'Panther Bronze',
-    price: 1500,
+    price: 500,
     icon: 'fa-solid fa-medal',
     perks: [
       'Logo listing on the program sponsor page',
@@ -33,7 +42,7 @@ export const CORPORATE_SPONSOR_TIERS: SupportTier[] = [
   },
   {
     name: 'Panther Silver',
-    price: 2500,
+    price: 1500,
     icon: 'fa-solid fa-award',
     perks: [
       'Shared category representation',
@@ -45,7 +54,7 @@ export const CORPORATE_SPONSOR_TIERS: SupportTier[] = [
   },
   {
     name: 'Panther Gold',
-    price: 3500,
+    price: 2500,
     icon: 'fa-solid fa-trophy',
     perks: [
       'Shared category representation',
@@ -80,16 +89,17 @@ export interface ComparisonRow {
   gold: string;
   silver: string;
   bronze: string;
+  iron: string;
 }
 
 export const CORPORATE_COMPARISON: ComparisonRow[] = [
-  { benefit: 'Category rights', platinum: 'Shared', gold: 'Shared', silver: 'Shared', bronze: 'Shared' },
-  { benefit: 'Social media posts', platinum: '2 / month', gold: '1 / month', silver: '1 / season', bronze: 'Website only' },
-  { benefit: 'Program ad', platinum: '¼-page full-color', gold: '⅛-page or logo', silver: 'Logo listing', bronze: 'Logo listing' },
-  { benefit: 'Game day PA mentions', platinum: 'Every home game', gold: 'Two games', silver: 'One game', bronze: '—' },
-  { benefit: 'Signage', platinum: 'Standard', gold: 'Standard', silver: 'Shared board', bronze: 'Shared board' },
-  { benefit: 'Activation', platinum: 'Concourse table (1 game)', gold: 'Fan Info collateral', silver: '—', bronze: '—' },
-  { benefit: 'VIP tickets', platinum: 'Two to three games', gold: 'Two to one game', silver: '—', bronze: '—' },
+  { benefit: 'Category rights', platinum: 'Shared', gold: 'Shared', silver: 'Shared', bronze: 'Shared', iron: 'Shared' },
+  { benefit: 'Social media posts', platinum: '2 / month', gold: '1 / month', silver: '1 / season', bronze: 'Website only', iron: 'Website only' },
+  { benefit: 'Program ad', platinum: '¼-page full-color', gold: '⅛-page or logo', silver: 'Logo listing', bronze: 'Logo listing', iron: '—' },
+  { benefit: 'Game day PA mentions', platinum: 'Every home game', gold: 'Two games', silver: 'One game', bronze: '—', iron: '—' },
+  { benefit: 'Signage', platinum: 'Standard', gold: 'Standard', silver: 'Shared board', bronze: 'Shared board', iron: '—' },
+  { benefit: 'Activation', platinum: 'Concourse table (1 game)', gold: 'Fan Info collateral', silver: '—', bronze: '—', iron: '—' },
+  { benefit: 'VIP tickets', platinum: 'Two to three games', gold: 'Two to one game', silver: '—', bronze: '—', iron: '—' },
 ];
 
 export const TOUCHDOWN_CLUB_TIERS: SupportTier[] = [
