@@ -2,9 +2,9 @@
  * Game Day Program content — everything on the /program page is driven from
  * this file so it can be updated each week without touching page markup.
  *
- * PLACEHOLDER DATA: the roster and coaching staff lists below are sample
- * entries — replace them with the real 2026 roster/staff as they're
- * finalized. SEASON_SCHEDULE reflects the real 2026 schedule (public/Schedule.svg).
+ * PLACEHOLDER DATA: the coaching staff list below is still sample entries —
+ * replace it with the real 2026 staff as it's finalized. ROSTER and
+ * SEASON_SCHEDULE reflect the real 2026 data (public/Schedule.svg).
  */
 
 export interface GameInfo {
@@ -161,16 +161,45 @@ export const COACHES: Coach[] = [
 ];
 
 export const ROSTER: Player[] = [
-  { number: 1, name: 'Player name', position: 'QB', grade: 'Sr.' },
-  { number: 2, name: 'Player name', position: 'RB', grade: 'Jr.' },
-  { number: 3, name: 'Player name', position: 'WR', grade: 'Sr.' },
-  { number: 4, name: 'Player name', position: 'WR', grade: 'So.' },
-  { number: 5, name: 'Player name', position: 'TE', grade: 'Jr.' },
-  { number: 50, name: 'Player name', position: 'OL', grade: 'Sr.' },
-  { number: 55, name: 'Player name', position: 'DL', grade: 'Jr.' },
-  { number: 40, name: 'Player name', position: 'LB', grade: 'Sr.' },
-  { number: 20, name: 'Player name', position: 'DB', grade: 'So.' },
-  { number: 90, name: 'Player name', position: 'K/P', grade: 'Jr.' },
+  { number: 1, name: 'Adam Rice', position: 'WR/DB', grade: 'Sr.' },
+  { number: 2, name: 'Zachary Stark', position: 'WR/DB', grade: 'Sr.' },
+  { number: 3, name: 'Maxwell Elliot', position: 'RB/LB', grade: 'Sr.' },
+  { number: 4, name: 'Malakai Tankhamvang', position: 'WR/DB', grade: 'Sr.' },
+  { number: 5, name: 'Levi Tesch', position: 'RB/DB', grade: 'Soph.' },
+  { number: 6, name: 'Austin Omwamba', position: 'TE/DL', grade: 'Jr.' },
+  { number: 7, name: 'Cade Goergen', position: 'QB/WR/LB', grade: 'Sr.' },
+  { number: 8, name: 'Nathan Long', position: 'QB/DB', grade: 'Sr.' },
+  { number: 9, name: 'Rylin Cheak', position: 'WR/DB', grade: 'Sr.' },
+  { number: 10, name: 'Trevor Strohschein', position: 'WR/RB/DB', grade: 'Sr.' },
+  { number: 11, name: 'Evan Chestolowski', position: 'TE/LB', grade: 'Jr.' },
+  { number: 12, name: 'Jackson Spearman', position: 'WR/DB', grade: 'Sr.' },
+  { number: 13, name: 'Jacob Hofer', position: 'TE/LB', grade: 'Jr.' },
+  { number: 14, name: 'Asher Linde', position: 'WR/DB', grade: 'Jr.' },
+  { number: 15, name: 'Benjamin Bruce', position: 'QB/DB', grade: 'Soph.' },
+  { number: 16, name: 'Navon Grabow', position: 'RB/LB', grade: 'Jr.' },
+  { number: 17, name: 'Jordan Faux', position: 'WR/DB', grade: 'Soph.' },
+  { number: 18, name: 'Nathan Nobbs', position: 'WR/DB', grade: 'Jr.' },
+  { number: 20, name: 'Joren Solak', position: 'WR/DB', grade: 'Jr.' },
+  { number: 21, name: 'Caleb Segovia', position: 'WR/DB', grade: 'Soph.' },
+  { number: 22, name: 'Wyatt Sandquist', position: 'WR/DB', grade: 'Soph.' },
+  { number: 23, name: 'Aiden Savage', position: 'WR/DB', grade: 'Jr.' },
+  { number: 24, name: 'Grant Garrison', position: 'WR/DB', grade: 'Sr.' },
+  { number: 25, name: 'Ty\'reon Jackson', position: 'WR/DB', grade: 'Jr.' },
+  { number: 33, name: 'Peter Arroyo', position: 'K', grade: 'Sr.' },
+  { number: 40, name: 'Jaxton Martin', position: 'TE/LB', grade: 'Soph.' },
+  { number: 45, name: 'Deacon Kruse', position: 'TE/DL', grade: 'Sr.' },
+  { number: 50, name: 'Lucky Kumbo', position: 'OL/DL', grade: 'Jr.' },
+  { number: 52, name: 'Samuel Razidlo', position: 'OL/DL', grade: 'Sr.' },
+  { number: 54, name: 'Cole Peterson', position: 'OL/DL', grade: 'Sr.' },
+  { number: 55, name: 'Matthew Ding', position: 'OL/DL', grade: 'Sr.' },
+  { number: 56, name: 'DeVon Williams', position: 'OL/DL', grade: 'Sr.' },
+  { number: 62, name: 'Christian Galeana Castro', position: 'OL/DL', grade: 'Sr.' },
+  { number: 63, name: 'Carter Ickler', position: 'OL/DL', grade: 'Sr.' },
+  { number: 64, name: 'Caleb Bauer', position: 'OL/DL', grade: 'Soph.' },
+  { number: 69, name: 'Monte Olson', position: 'OL/DL', grade: 'Jr.' },
+  { number: 76, name: 'Evan Gyura', position: 'OL/DL', grade: 'Soph.' },
+  { number: 77, name: 'Kyrian Davis', position: 'OL/DL', grade: 'Soph.' },
+  { number: 78, name: 'Camden Prochnow', position: 'OL/DL', grade: 'Soph.' }
 ];
 
 /*
