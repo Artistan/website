@@ -2,9 +2,8 @@
  * Game Day Program content — everything on the /program page is driven from
  * this file so it can be updated each week without touching page markup.
  *
- * PLACEHOLDER DATA: the coaching staff list below is still sample entries —
- * replace it with the real 2026 staff as it's finalized. ROSTER and
- * SEASON_SCHEDULE reflect the real 2026 data (public/Schedule.svg).
+ * ROSTER, COACHES, and SEASON_SCHEDULE all reflect real 2026 data
+ * (sources: public/Schedule.svg, public/coaches-corner.png).
  */
 
 export interface GameInfo {
@@ -30,6 +29,8 @@ export interface GameEvent {
 export interface Coach {
   name: string;
   role: string;
+  /** Path under public/ — headshot cropped from public/coaches-corner.png. */
+  photo?: string;
 }
 
 export interface Player {
@@ -40,7 +41,7 @@ export interface Player {
 }
 
 /** Set to true once the real roster/staff below has been filled in. */
-export const PROGRAM_DATA_IS_PLACEHOLDER = true;
+export const PROGRAM_DATA_IS_PLACEHOLDER = false;
 
 /** 2026 varsity schedule, sourced from public/Schedule.svg. */
 export const SEASON_SCHEDULE: GameInfo[] = [
@@ -153,11 +154,16 @@ export const GAME_EVENTS: GameEvent[] = [
 ];
 
 export const COACHES: Coach[] = [
-  { name: 'Coach name', role: 'Head Coach' },
-  { name: 'Coach name', role: 'Offensive Coordinator' },
-  { name: 'Coach name', role: 'Defensive Coordinator' },
-  { name: 'Coach name', role: 'Special Teams' },
-  { name: 'Coach name', role: 'Line Coach' },
+  { name: 'Jon Vik', role: 'Varsity Head Coach', photo: 'coaches/jon-vik.jpg' },
+  { name: 'Cade Sheehan', role: 'Offensive Coordinator', photo: 'coaches/cade-sheehan.jpg' },
+  { name: 'Austin Buzzard', role: 'Defensive Coordinator', photo: 'coaches/austin-buzzard.jpg' },
+  { name: 'Nick Elias', role: 'Running Back Coach', photo: 'coaches/nick-elias.jpg' },
+  { name: 'Paul Malone', role: 'Defensive Line Coach', photo: 'coaches/paul-malone.jpg' },
+  { name: 'Jake Johnson', role: 'JV Offensive Line Coach', photo: 'coaches/jake-johnson.jpg' },
+  { name: 'Zach Olson', role: 'JV Defensive Back Coach', photo: 'coaches/zach-olson.jpg' },
+  { name: 'Johnny Tran', role: '9th Gr. Coach', photo: 'coaches/johnny-tran.jpg' },
+  { name: 'Cedric Harrell', role: '9th Gr. Wide Receiver Coach', photo: 'coaches/cedric-harrell.jpg' },
+  { name: 'James Robertson', role: '9th Gr. Defensive Back Coach', photo: 'coaches/james-robertson.jpg' },
 ];
 
 export const ROSTER: Player[] = [

@@ -140,11 +140,22 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
           <h2 class="display-font h1">Coaching Staff</h2>
         </div>
         <div class="row gy-4 justify-content-center">
-          @for (coach of coaches; track coach.role) {
+          @for (coach of coaches; track coach.name) {
             <div class="col-6 col-md-4 col-lg-2">
               <div class="card card-panther h-100 text-center">
                 <div class="card-body p-3">
-                  <div class="icon-badge mx-auto mb-2"><i class="fa-solid fa-clipboard"></i></div>
+                  @if (coach.photo) {
+                    <img
+                      class="coach-photo mx-auto mb-2"
+                      [src]="coach.photo"
+                      [alt]="coach.name + ', ' + coach.role"
+                      width="72"
+                      height="72"
+                      loading="lazy"
+                    />
+                  } @else {
+                    <div class="icon-badge mx-auto mb-2"><i class="fa-solid fa-clipboard"></i></div>
+                  }
                   <div class="fw-bold small">{{ coach.name }}</div>
                   <div class="small text-muted">{{ coach.role }}</div>
                 </div>
