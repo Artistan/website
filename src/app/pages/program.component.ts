@@ -1,7 +1,20 @@
 import { Component, computed, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SponsorsSupportersComponent } from '../components/sponsors-supporters.component';
-import { awayMapUrl, COACHES, GAME_EVENTS, gameTicketUrl, getFeaturedGame, Player, ROSTER } from '../program-data';
+import {
+  awayMapUrl,
+  centuryRecord,
+  COACHES,
+  GAME_EVENTS,
+  gameTicketUrl,
+  getFeaturedGame,
+  matchupTitle,
+  Player,
+  ROSTER,
+  TEAM_COLOR,
+  TEAM_LOGO,
+  TEAM_NAME,
+} from '../program-data';
 
 type SortKey = 'number' | 'name' | 'position' | 'grade';
 
@@ -23,44 +36,72 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
     <!-- This week's game -->
     <section class="py-5">
       <div class="container">
-        <div class="card card-panther">
-          <div class="card-body p-4">
-            <div class="row align-items-center gy-3">
-              <div class="col-lg-8">
-                <div class="section-kicker mb-1">This week</div>
-                <div class="d-flex align-items-center gap-3 mb-2">
-                  <img src="CenturyPantherFootball.jpg" alt="Century Panthers logo" class="matchup-logo">
-                  <h2 class="display-font h2 mb-0">Panthers vs. {{ game.opponent }}</h2>
-                  <img [src]="game.logo" [alt]="game.opponent + ' logo'" class="matchup-logo">
-                </div>
-                <div class="d-flex flex-wrap gap-4 small text-muted">
-                  <span><i class="fa-solid fa-calendar-days text-navy me-2"></i>{{ game.date }}</span>
-                  <span><i class="fa-solid fa-clock text-navy me-2"></i>Kickoff {{ game.kickoff }}</span>
-                  <span><i class="fa-solid fa-location-dot text-navy me-2"></i>{{ game.location }}</span>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="d-flex flex-wrap align-items-center gap-2 justify-content-lg-end">
-                  @if (mapUrl; as url) {
-                    <a class="badge badge-away fs-6 px-3 py-2 text-decoration-none" [href]="url" target="_blank" rel="noopener"
-                       [attr.aria-label]="'Map to ' + game.opponent + ' (opens in a new tab)'">
-                      <i class="fa-solid fa-bus me-1"></i>Away Game<i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                    </a>
-                  } @else {
-                    <span class="badge fs-6 px-3 py-2" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
-                      <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home Game' : 'Away Game' }}
-                    </span>
-                  }
-                  @if (ticketUrl; as url) {
-                    <a class="btn btn-navy btn-sm" [href]="url" target="_blank" rel="noopener"
-                       [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
-                      <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
-                    </a>
-                  }
+        <div class="text-center mb-3">
+          <div class="section-kicker mb-1">This week</div>
+          <h2 class="display-font h4 mb-0">{{ matchup }}</h2>
+        </div>
+
+        <div class="card card-panther matchup-panel">
+          <div class="card-body p-0">
+            <div class="matchup-band matchup-band--left" [style.--band-color]="matchupTeams[0].color">
+              <div class="matchup-band__shape">
+                <div class="matchup-band__cell">
+                  <img class="matchup-band__logo" [src]="matchupTeams[0].logo" alt="" aria-hidden="true">
                 </div>
               </div>
             </div>
+            <div class="matchup-band matchup-band--right" [style.--band-color]="matchupTeams[1].color">
+              <div class="matchup-band__shape">
+                <div class="matchup-band__cell">
+                  <img class="matchup-band__logo" [src]="matchupTeams[1].logo" alt="" aria-hidden="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="matchup-center py-3">
+              <div class="row">
+                <div class="col-6 text-end">
+                  <img class="matchup-logo mb-2" [src]="matchupTeams[0].logo" [alt]="matchupTeams[0].name + ' logo'">
+                  <div class="display-font matchup-team-name fw-bold mb-1">{{ matchupTeams[0].name }}</div>
+                  <div class="small text-muted">{{ matchupTeams[0].record }}</div>
+                </div>
+                <div class="col-6 text-start">
+                  <img class="matchup-logo mb-2" [src]="matchupTeams[1].logo" [alt]="matchupTeams[1].name + ' logo'">
+                  <div class="display-font matchup-team-name fw-bold mb-1">{{ matchupTeams[1].name }}</div>
+                  <div class="small text-muted">{{ matchupTeams[1].record }}</div>
+                </div>
+              </div>
+
+              <div class="text-center text-uppercase small text-muted my-3">
+                <div class="fw-bold">{{ game.kickoff }} CT</div>
+                <div>{{ shortDate }}</div>
+              </div>
+
+              <div class="text-center text-uppercase small text-muted mx-auto" style="max-width: 90%;">
+                {{ venue }}
+              </div>
+
+            </div>
           </div>
+        </div>
+
+        <div class="d-flex flex-wrap align-items-center gap-2 justify-content-center mt-3">
+          @if (mapUrl; as url) {
+            <a class="badge badge-away fs-6 px-3 py-2 text-decoration-none" [href]="url" target="_blank" rel="noopener"
+               [attr.aria-label]="'Map to ' + game.opponent + ' (opens in a new tab)'">
+              <i class="fa-solid fa-bus me-1"></i>Away Game<i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+            </a>
+          } @else {
+            <span class="badge fs-6 px-3 py-2" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
+              <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home Game' : 'Away Game' }}
+            </span>
+          }
+          @if (ticketUrl; as url) {
+            <a class="btn btn-navy btn-sm" [href]="url" target="_blank" rel="noopener"
+               [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
+              <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
+            </a>
+          }
         </div>
 
         @if (game.isHome) {
@@ -192,6 +233,34 @@ export class ProgramComponent {
   mapEmbedUrl: SafeResourceUrl | null = null;
   mapUrl = awayMapUrl(this.game);
   ticketUrl = gameTicketUrl(this.game);
+  matchup = matchupTitle(this.game);
+
+  /** TeamA first, TeamB second — we're the visitor away, the host at home. */
+  matchupTeams = (() => {
+    const century = {
+      name: TEAM_NAME,
+      logo: TEAM_LOGO,
+      color: TEAM_COLOR,
+      record: `Varsity (${centuryRecord()})`,
+    };
+    // Opponent records are not in our data, so theirs stays unqualified.
+    const opponent = {
+      name: this.game.opponent,
+      logo: this.game.logo,
+      color: this.game.color,
+      record: 'Varsity',
+    };
+    return this.game.isHome ? [opponent, century] : [century, opponent];
+  })();
+
+  /** Split off the ISO string — `new Date(iso)` is UTC and lands a day early. */
+  shortDate = (() => {
+    const [, month, day] = this.game.dateISO.split('-');
+    return `${+month}/${+day}`;
+  })();
+
+  /** Venue only; `location` carries an "At " prefix for away games. */
+  venue = this.game.location.replace(/^At /, '');
 
   constructor(private sanitizer: DomSanitizer) {
     if (!this.game.isHome && this.game.mapQuery) {

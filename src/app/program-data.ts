@@ -18,8 +18,10 @@ export interface GameInfo {
   isHome: boolean;
   /** Google Maps search query for the opponent's football field (away games only). */
   mapQuery?: string;
-  /** Opponent mascot logo, cropped from public/Schedule.png. */
+  /** Opponent logo (colour), sourced from Bound. */
   logo: string;
+  /** Opponent's primary colour, used for the matchup panel's angled band. */
+  color: string;
   /** Final score, once the game has been played. Absent means not yet played. */
   result?: { panthers: number; opponent: number };
   /**
@@ -59,10 +61,11 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     dateISO: '2026-09-03',
     date: 'Sept 3, 2026',
     kickoff: '6:30 PM',
-    location: 'At Tartan High School',
+    location: 'At Tartan High School Tartan Stadium',
     isHome: false,
-    mapQuery: 'Tartan High School, Oakdale, MN',
+    mapQuery: 'Tartan High School Tartan Stadium, Oakdale, MN',
     logo: 'opponent-logos/tartan.png',
+    color: '#1053A9',
     result: { panthers: 25, opponent: 0 },
   },
   {
@@ -70,19 +73,21 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     dateISO: '2026-09-11',
     date: 'Sept 11, 2026',
     kickoff: '7:00 PM',
-    location: 'Century High School Stadium',
+    location: 'Rochester Century High School Panther Stadium',
     isHome: true,
     logo: 'opponent-logos/chaska.png',
+    color: '#452E89',
   },
   {
     opponent: 'Owatonna',
     dateISO: '2026-09-18',
     date: 'Sept 18, 2026',
     kickoff: '7:00 PM',
-    location: 'At Owatonna High School',
+    location: 'At Owatonna High School OHS Stadium - Federated Field',
     isHome: false,
-    mapQuery: 'Owatonna High School, Owatonna, MN',
+    mapQuery: 'Owatonna High School OHS Stadium - Federated Field, Owatonna, MN',
     logo: 'opponent-logos/owatonna.png',
+    color: '#004F9E',
     ticketUrl: 'https://tickets.gobound.com/tickets/events/h202604290904460275babb4a57abb41/checkout',
   },
   {
@@ -90,10 +95,11 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     dateISO: '2026-09-25',
     date: 'Sept 25, 2026',
     kickoff: '5:30 PM',
-    location: 'At Rochester John Marshall High School',
+    location: 'At Rochester John Marshall High School John Drews Field',
     isHome: false,
-    mapQuery: 'John Marshall High School, Rochester, MN',
+    mapQuery: 'Rochester John Marshall High School John Drews Field, Rochester, MN',
     logo: 'opponent-logos/roch-jm.png',
+    color: '#000000',
     ticketUrl: 'https://tickets.gobound.com/tickets/events/h20260603045810701c8c1421f89f540/checkout',
   },
   {
@@ -101,10 +107,11 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     dateISO: '2026-10-02',
     date: 'Oct 2, 2026',
     kickoff: '5:30 PM',
-    location: 'At Rochester Mayo High School',
+    location: 'At Rochester Mayo High School Whitney Stadium',
     isHome: false,
-    mapQuery: 'Mayo High School, Rochester, MN',
+    mapQuery: 'Rochester Mayo High School Whitney Stadium, Rochester, MN',
     logo: 'opponent-logos/roch-mayo.png',
+    color: '#1F5103',
     ticketUrl: 'https://tickets.gobound.com/tickets/events/h202605070915421951d1f425bee0c4b/checkout',
   },
   {
@@ -112,19 +119,21 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     dateISO: '2026-10-09',
     date: 'Oct 9, 2026',
     kickoff: '7:00 PM',
-    location: 'Century High School Stadium',
+    location: 'Rochester Century High School Panther Stadium',
     isHome: true,
     logo: 'opponent-logos/new-prague.png',
+    color: '#7C082B',
   },
   {
     opponent: 'Northfield',
     dateISO: '2026-10-14',
     date: 'Oct 14, 2026',
     kickoff: '7:00 PM',
-    location: 'At Northfield High School',
+    location: 'At Northfield High School Memorial Field',
     isHome: false,
-    mapQuery: 'Northfield High School, Northfield, MN',
+    mapQuery: 'Northfield High School Memorial Field, Northfield, MN',
     logo: 'opponent-logos/northfield.png',
+    color: '#711831',
     ticketUrl: 'https://tickets.gobound.com/tickets/events/h202605200759188910ee21248543d42/checkout',
   },
   {
@@ -132,9 +141,10 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     dateISO: '2026-10-21',
     date: 'Oct 21, 2026',
     kickoff: '7:00 PM',
-    location: 'Century High School Stadium',
+    location: 'Rochester Century High School Panther Stadium',
     isHome: true,
     logo: 'opponent-logos/winona.png',
+    color: '#EE4B25',
   },
 ];
 
@@ -154,6 +164,32 @@ export const SEASON_SCHEDULE: GameInfo[] = [
 export function gameTicketUrl(game: GameInfo): string | null {
   if (game.result) return null;
   return game.ticketUrl ?? BOUND_TICKETS_URL;
+}
+
+/** Our own program name, as it should read in a "TeamA @ TeamB" matchup. */
+export const TEAM_NAME = 'Rochester Century';
+
+/** Century's own logo and colour, the constant half of every matchup. */
+export const TEAM_LOGO = 'opponent-logos/roch-century.png';
+export const TEAM_COLOR = '#13204D';
+
+/** Century's varsity record so far, derived from the games that have a result. */
+export function centuryRecord(): string {
+  let wins = 0;
+  let losses = 0;
+  let ties = 0;
+  for (const game of SEASON_SCHEDULE) {
+    if (!game.result) continue;
+    if (game.result.panthers > game.result.opponent) wins++;
+    else if (game.result.panthers < game.result.opponent) losses++;
+    else ties++;
+  }
+  return ties ? `${wins}-${losses}-${ties}` : `${wins}-${losses}`;
+}
+
+/** Always reads "TeamA @ TeamB" — we visit on away games and host at home. */
+export function matchupTitle(game: GameInfo): string {
+  return game.isHome ? `${game.opponent} @ ${TEAM_NAME}` : `${TEAM_NAME} @ ${game.opponent}`;
 }
 
 export function awayMapUrl(game: GameInfo): string | null {

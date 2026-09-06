@@ -32,7 +32,7 @@ import { awayMapUrl, gameTicketUrl, GameInfo, SEASON_SCHEDULE } from '../program
             <a class="btn btn-outline-navy btn-sm" [href]="goBoundTeamPageUrl" target="_blank" rel="noopener"
                title="Schedule and statistics"
                aria-label="GoBound: schedule and statistics (opens in a new tab)">
-              <i class="fa-solid fa-chart-line me-1"></i>GoBound &gt;&gt;
+              <i class="fa-solid fa-chart-line me-1"></i>GoBound &raquo;
             </a>
           </div>
         </div>
@@ -96,7 +96,7 @@ import { awayMapUrl, gameTicketUrl, GameInfo, SEASON_SCHEDULE } from '../program
           <a class="btn btn-navy btn-lg" [href]="goBoundTeamPageUrl" target="_blank" rel="noopener"
              title="Schedule and statistics"
              aria-label="Statistics and scores on GoBound (opens in a new tab)">
-            <i class="fa-solid fa-chart-line me-2"></i>Statistics &amp; Scores &gt;&gt; GoBound
+            <i class="fa-solid fa-chart-line me-2"></i>Statistics &amp; Scores &raquo; GoBound
           </a>
         </div>
 
@@ -116,9 +116,8 @@ import { awayMapUrl, gameTicketUrl, GameInfo, SEASON_SCHEDULE } from '../program
               <div class="card-body">
                 <h2 class="h5 fw-bold"><i class="fa-solid fa-house text-navy me-2"></i>Home game day</h2>
                 <p class="small text-muted mb-0">
-                  Gates open 90 minutes before kickoff. The Touchdown Club runs the spirit wear
-                  table at every home game — stop by and say hi, or better yet,
-                  <a routerLink="/get-involved">take a shift</a>.
+                  Gates open 90 minutes before kickoff. The Booster Club runs the spirit wear
+                  table at most home games.
                 </p>
               </div>
             </div>

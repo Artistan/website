@@ -152,6 +152,177 @@ body {
   flex-shrink: 0;
 }
 
+/* ---------- matchup panel (modelled on Bound's competition card) ----------
+   Each side is an absolutely-positioned, overflow-hidden column holding a large
+   rotated box. The box's thick BORDER is the team colour and forms the diagonal
+   band; a second rotated box adds the white hairline. The colour arrives as the
+   --band-color custom property, since a pseudo-element can't take an inline
+   style. */
+.matchup-panel {
+  position: relative;
+  overflow: hidden;
+  min-height: 210px;
+  /* Band width and the centre column's clearance are driven by one value, so
+     the text can never run under the angled band at any viewport width. The
+     angle steepens (rotates toward vertical) as the card narrows, so the
+     diagonal sweeps less horizontally and gives the text room back. */
+  --band-width: 175px;
+  --band-angle: 20deg;
+}
+
+.matchup-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--band-width);
+  height: 100%;
+  overflow: hidden;
+}
+
+.matchup-band--left {
+  left: 0;
+}
+
+.matchup-band--right {
+  right: 0;
+}
+
+.matchup-band__shape {
+  position: relative;
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.matchup-band__shape::before,
+.matchup-band__shape::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 150%;
+}
+
+.matchup-band__shape::before {
+  width: 150%;
+  background-color: #ececec;
+  border: 8px solid var(--band-color, var(--panther-navy));
+}
+
+.matchup-band__shape::after {
+  width: 147%;
+  border: 2px solid #fff;
+}
+
+.matchup-band--left .matchup-band__shape::before,
+.matchup-band--left .matchup-band__shape::after {
+  left: -145px;
+  transform: rotate(calc(-1 * var(--band-angle)));
+}
+
+.matchup-band--right .matchup-band__shape::before,
+.matchup-band--right .matchup-band__shape::after {
+  right: -145px;
+  transform: rotate(var(--band-angle));
+}
+
+.matchup-band__cell {
+  display: table-cell;
+  vertical-align: bottom;
+  padding-bottom: 0.75em;
+}
+
+.matchup-band--left .matchup-band__cell {
+  padding-left: 0.75em;
+}
+
+.matchup-band--right .matchup-band__cell {
+  text-align: right;
+  padding-right: 0.75em;
+}
+
+.matchup-band__logo {
+  position: relative;
+  z-index: 1;
+  /* Derived from the band so the logo plus its 0.75em inset always fits inside
+     it — a fixed size silently gets clipped when the band narrows. */
+  width: min(75px, calc(var(--band-width) - 2em));
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+/* matchup team names — the tier media queries below step this down so long
+   school names don't break mid-word in the two-column layout */
+.matchup-team-name {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* the centre column has to clear both bands */
+.matchup-center {
+  position: relative;
+  z-index: 2;
+  padding-left: calc(var(--band-width) - 0.75rem);
+  padding-right: calc(var(--band-width) - 0.75rem);
+}
+
+/* between the phone layout and full width the 175px band crowds the text */
+@media (max-width: 991.98px) {
+  .matchup-panel {
+    --band-width: 135px;
+    --band-angle: 13deg;
+  }
+
+  .matchup-band--left .matchup-band__shape::before,
+  .matchup-band--left .matchup-band__shape::after {
+    left: -110px;
+  }
+
+  .matchup-band--right .matchup-band__shape::before,
+  .matchup-band--right .matchup-band__shape::after {
+    right: -110px;
+  }
+
+  .matchup-team-name {
+    font-size: 1.2rem;
+  }
+
+  .matchup-band__shape::after {
+    width: 149%;
+    border: 2px solid #fff;
+  }
+}
+
+@media (max-width: 600px) {
+  .matchup-panel {
+    --band-width: 75px;
+    --band-angle: 8deg;
+  }
+
+  .matchup-team-name {
+    font-size: 0.95rem;
+  }
+
+  .matchup-band--left .matchup-band__shape::before,
+  .matchup-band--left .matchup-band__shape::after {
+    left: -52px;
+    top: -12px;
+  }
+
+  .matchup-band--right .matchup-band__shape::before,
+  .matchup-band--right .matchup-band__shape::after {
+    right: -52px;
+    top: -12px;
+  }
+
+  .matchup-band__shape::after {
+    width: 149%;
+    border: 2px solid #fff;
+  }
+}
+
 .text-silver {
   color: var(--panther-silver) !important;
 }
