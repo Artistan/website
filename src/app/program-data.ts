@@ -3,7 +3,7 @@
  * this file so it can be updated each week without touching page markup.
  *
  * ROSTER, COACHES, and SEASON_SCHEDULE all reflect real 2026 data
- * (sources: public/Schedule.svg, docs/coaches.png).
+ * (sources: public/Schedule.png, docs/coaches.png).
  */
 
 export interface GameInfo {
@@ -16,7 +16,7 @@ export interface GameInfo {
   isHome: boolean;
   /** Google Maps search query for the opponent's football field (away games only). */
   mapQuery?: string;
-  /** Opponent mascot logo, cropped from public/Schedule.svg. */
+  /** Opponent mascot logo, cropped from public/Schedule.png. */
   logo: string;
 }
 
@@ -43,7 +43,7 @@ export interface Player {
 /** Set to true once the real roster/staff below has been filled in. */
 export const PROGRAM_DATA_IS_PLACEHOLDER = false;
 
-/** 2026 varsity schedule, sourced from public/Schedule.svg. */
+/** 2026 varsity schedule, sourced from public/Schedule.png. */
 export const SEASON_SCHEDULE: GameInfo[] = [
   {
     opponent: 'Tartan',

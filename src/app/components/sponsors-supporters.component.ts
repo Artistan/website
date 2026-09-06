@@ -61,7 +61,7 @@ function familySupporter(firstNames: string, lastName: string): PersonBox {
  */
 function tierRowCols(ladder: number[], tierIndex: number, itemCount: number): string {
   const isSingle = itemCount === 1;
-  const width = ladder[Math.min(isSingle ? tierIndex : tierIndex + 1, ladder.length - 1)];
+  const width = ladder[tierIndex];
   const desktopCols = 12 / width;
   const mobileCols = isSingle ? 1 : 2;
   return `row-cols-${mobileCols} row-cols-md-${desktopCols} justify-content-center`;
@@ -71,7 +71,7 @@ function tierRowCols(ladder: number[], tierIndex: number, itemCount: number): st
  * Ladder for the corporate tiers, Platinum first. Floors out at col-2 (six per row) since a
  * narrower card can't fit a logo.
  */
-const CORPORATE_WIDTH_LADDER = [12, 6, 4, 3, 2, 2, 2, 2];
+const CORPORATE_WIDTH_LADDER = [12, 6, 4, 3, 3, 4, 2];
 
 function corporateSponsorRow(tierIndex: number, title: string, sponsors: RealSponsor[]): SponsorRow {
   return { title, sponsors, rowCols: tierRowCols(CORPORATE_WIDTH_LADDER, tierIndex, sponsors.length) };
@@ -84,16 +84,22 @@ const CORPORATE_ROWS: SponsorRow[] = [
   corporateSponsorRow(1, 'Gold Sponsors', [{ src: '/sponsors/LakesideDental.png', name: 'Lakeside Dentistry' }]),
   corporateSponsorRow(2, 'Silver Sponsors', [{ src: '/sponsors/VFW-1215.png', name: 'VFW Post 1215' }]),
   corporateSponsorRow(3, 'Bronze Sponsors', [
-    { name: 'Alerus' },
-    { name: 'Atlas Insurance' },
-    { name: 'Archkey Technologies' },
+    { src: '/sponsors/alerus-logo.svg', name: 'Alerus' },
+    { src: '/sponsors/Atlas.png', name: 'Atlas Insurance' },
+    { src: '/sponsors/Archkey-Technologies.png', name: 'Archkey Technologies' },
     { src: '/sponsors/BearArms.png', name: 'Bear Arms' },
-    { name: 'Bowlocity' },
+    { src: '/sponsors/Bowlocity.png', name: 'Bowlocity' },
+    { src: '/sponsors/counselor-realty-homepage-logo.png', name: "Counselor Realty Rochester", dark: true },
     { src: '/sponsors/MC_STACKED_BLACK_RGB_CLEAR.png', name: 'Mayo Clinic' },
+    { src: '/sponsors/summit.png', name: 'Summit Fire Protection' },
   ]),
-  corporateSponsorRow(4, 'Iron Sponsors', [{ name: 'EDI Driving School' }, { name: 'Superior Screeners' }]),
+  corporateSponsorRow(4, 'Iron Sponsors', [
+    { src: '/sponsors/enhanced-driving-institute.png', name: 'EDI Driving School' },
+    { src: '/sponsors/superior-screeners.png', name: 'Superior Screeners' }
+  ]),
   corporateSponsorRow(5, 'Panther Fuel Sponsors', [
-    { name: 'Chick-fil-A' },
+    { src: '/sponsors/hyvee.png', name: 'Hy-Vee' },
+    { src: '/sponsors/chick-fil-a.png', name: 'Chick-fil-A' },
     { src: '/sponsors/WestEndBlends.jpg', name: 'West End Blends' },
   ]),
   corporateSponsorRow(6, '5th Quarter Sponsor', [{ src: '/sponsors/Tavern 22.jpg', name: 'Tavern 22' }]),
@@ -101,7 +107,7 @@ const CORPORATE_ROWS: SponsorRow[] = [
 
 /** Real sponsor logos for the Coupon Card fundraiser, served from public/sponsors/coupon-card. */
 const COUPON_CARD_SPONSORS: RealSponsor[] = [
-  { name: "BB's Pizzaria" },
+  { src: '/sponsors/coupon-card/BBsLogo2016White.png',name: "BB's Pizzaria", dark: true  },
   { src: '/sponsors/coupon-card/Blue Lagoon.png', name: 'Blue Lagoon' },
   { src: '/sponsors/coupon-card/KwikTrip.png', name: 'Kwik Trip' },
   { src: '/sponsors/coupon-card/YellowArch.png', name: "McDonald's®" },
@@ -162,6 +168,10 @@ const COMMUNITY_ROWS: SampleRow[] = [
           }
         </div>
         @for (row of corporateRows; track row.title) {
+
+
+
+
           @if (row.sponsors.length > 0) {
             <div class="small fw-semibold text-muted text-uppercase mb-2">{{ row.title }}</div>
             <div class="row g-3 mb-4" [class]="row.rowCols">

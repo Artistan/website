@@ -141,7 +141,7 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
         </div>
         <div class="row gy-4 justify-content-center">
           @for (coach of coaches; track coach.name) {
-            <div class="col-6 col-md-4 col-lg-2">
+            <div class="col-6 col-md-4">
               <div class="card card-panther h-100 text-center">
                 <div class="card-body p-3">
                   @if (coach.photo) {
