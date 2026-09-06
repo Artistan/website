@@ -43,6 +43,7 @@ import { awayMapUrl, GameInfo, SEASON_SCHEDULE } from '../program-data';
                 <th scope="col">Site</th>
                 <th scope="col">Location</th>
                 <th scope="col">Result</th>
+                <th scope="col">Tickets</th>
               </tr>
             </thead>
             <tbody>
@@ -68,6 +69,16 @@ import { awayMapUrl, GameInfo, SEASON_SCHEDULE } from '../program-data';
                       <span class="fw-bold me-1">{{ outcome(game) }}</span>{{ game.result.panthers }}&ndash;{{ game.result.opponent }}
                     } @else {
                       <span class="text-muted">{{ game.kickoff }}</span>
+                    }
+                  </td>
+                  <td>
+                    @if (game.ticketUrl) {
+                      <a class="btn btn-navy btn-sm text-nowrap" [href]="game.ticketUrl" target="_blank" rel="noopener"
+                         [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
+                        <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
+                      </a>
+                    } @else {
+                      <span class="text-muted small">&mdash;</span>
                     }
                   </td>
                 </tr>

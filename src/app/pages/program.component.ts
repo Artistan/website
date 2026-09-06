@@ -36,8 +36,14 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
                 <div class="d-flex flex-wrap gap-4 small text-muted">
                   <span><i class="fa-solid fa-calendar-days text-navy me-2"></i>{{ game.date }}</span>
                   <span><i class="fa-solid fa-clock text-navy me-2"></i>Kickoff {{ game.kickoff }}</span>
-                  <span><i class="fa-solid fa-location-dot text-navy me-2"></i>{{ game.location }}</span>
+                    <span><i class="fa-solid fa-location-dot text-navy me-2"></i>{{ game.location }}</span>
                 </div>
+                @if (game.ticketUrl) {
+                  <a class="btn btn-navy btn-sm mt-3" [href]="game.ticketUrl" target="_blank" rel="noopener"
+                     [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
+                    <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
+                  </a>
+                }
               </div>
               <div class="col-lg-4 text-end">
                 @if (mapUrl; as url) {

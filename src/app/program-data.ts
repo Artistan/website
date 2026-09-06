@@ -20,6 +20,11 @@ export interface GameInfo {
   logo: string;
   /** Final score, once the game has been played. Absent means not yet played. */
   result?: { panthers: number; opponent: number };
+  /**
+   * Bound checkout link. Only the away games are sold through Bound — Century's
+   * home football games are not listed there, so those entries have no URL.
+   */
+  ticketUrl?: string;
 }
 
 export interface GameEvent {
@@ -76,6 +81,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     isHome: false,
     mapQuery: 'Owatonna High School, Owatonna, MN',
     logo: 'opponent-logos/owatonna.png',
+    ticketUrl: 'https://tickets.gobound.com/tickets/events/h202604290904460275babb4a57abb41/checkout',
   },
   {
     opponent: 'Rochester John Marshall',
@@ -86,6 +92,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     isHome: false,
     mapQuery: 'John Marshall High School, Rochester, MN',
     logo: 'opponent-logos/roch-jm.png',
+    ticketUrl: 'https://tickets.gobound.com/tickets/events/h20260603045810701c8c1421f89f540/checkout',
   },
   {
     opponent: 'Rochester Mayo',
@@ -96,6 +103,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     isHome: false,
     mapQuery: 'Mayo High School, Rochester, MN',
     logo: 'opponent-logos/roch-mayo.png',
+    ticketUrl: 'https://tickets.gobound.com/tickets/events/h202605070915421951d1f425bee0c4b/checkout',
   },
   {
     opponent: 'New Prague',
@@ -115,6 +123,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     isHome: false,
     mapQuery: 'Northfield High School, Northfield, MN',
     logo: 'opponent-logos/northfield.png',
+    ticketUrl: 'https://tickets.gobound.com/tickets/events/h202605200759188910ee21248543d42/checkout',
   },
   {
     opponent: 'Winona',
