@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { FACEBOOK_URL } from '../site-links';
 
@@ -103,10 +105,10 @@ import { FACEBOOK_URL } from '../site-links';
         <div class="d-flex justify-content-center mb-4">
           <!-- Facebook Page Plugin: always shows the page's latest posts -->
           <iframe
-            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcenturypantherfootball&tabs=timeline&width=500&height=640&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false"
-            width="500" height="640"
-            style="border: none; overflow: hidden; max-width: 100%; border-radius: 0.75rem; box-shadow: 0 0.5rem 1.25rem rgba(11, 31, 58, 0.15);"
-            scrolling="no" frameborder="0" allowfullscreen="true"
+            class="fb-page-embed"
+            [src]="fbEmbedUrl()"
+            [width]="fbPluginWidth()" height="1400"
+            scrolling="yes" frameborder="0" allowfullscreen="true"
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
             title="Century Panther Football on Facebook"
             loading="lazy">
@@ -162,6 +164,46 @@ import { FACEBOOK_URL } from '../site-links';
 })
 export class HomeComponent {
   facebookUrl = FACEBOOK_URL;
+
+  private sanitizer = inject(DomSanitizer);
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
+  /**
+   * Facebook renders the page plugin at whatever `width` the embed URL asks
+   * for and clamps it to 180-500px, so the URL has to track the element or the
+   * feed gets cut off horizontally on phones. Mirrors the CSS clamp on
+   * `.fb-page-embed`; 500 is the prerender default.
+   */
+  fbPluginWidth = signal(500);
+
+  fbEmbedUrl = computed<SafeResourceUrl>(() => {
+    const params = new URLSearchParams({
+      href: FACEBOOK_URL,
+      tabs: 'timeline',
+      width: String(this.fbPluginWidth()),
+      height: '1400',
+      small_header: 'true',
+      adapt_container_width: 'true',
+      hide_cover: 'false',
+      show_facepile: 'false',
+    });
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://www.facebook.com/plugins/page.php?${params.toString()}`,
+    );
+  });
+
+  constructor() {
+    this.syncFbPluginWidth();
+  }
+
+  /** Setting a signal to its current value is a no-op, so resizing within the
+   *  same clamped width won't reload the iframe. */
+  @HostListener('window:resize')
+  syncFbPluginWidth(): void {
+    if (!this.isBrowser) return;
+    const eightyPercent = Math.round(window.innerWidth * 0.8);
+    this.fbPluginWidth.set(Math.min(500, Math.max(180, eightyPercent)));
+  }
 
   stats = [
     { value: '100+', label: 'Players supported' },

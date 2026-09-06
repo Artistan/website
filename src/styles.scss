@@ -152,6 +152,21 @@ body {
   flex-shrink: 0;
 }
 
+/* ---------- Facebook page plugin ----------
+   Facebook caps the plugin itself at 500px wide (min 180), so the 80vw only
+   bites on narrow screens — it can never render wider than 500. Height is
+   viewport-relative and deliberately shorter than the timeline the plugin
+   renders, so the feed scrolls inside the frame instead of being cut off. */
+.fb-page-embed {
+  /* mirrors the clamp in HomeComponent.syncFbPluginWidth() */
+  width: clamp(180px, 80vw, 500px);
+  height: clamp(420px, 80vh, 1400px);
+  max-width: 100%;
+  border: 0;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1.25rem rgba(11, 31, 58, 0.15);
+}
+
 /* ---------- matchup panel (modelled on Bound's competition card) ----------
    Each side is an absolutely-positioned, overflow-hidden column holding a large
    rotated box. The box's thick BORDER is the team colour and forms the diagonal
