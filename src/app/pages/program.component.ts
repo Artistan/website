@@ -99,7 +99,7 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
           @if (ticketUrl; as url) {
             <a class="btn btn-navy btn-sm" [href]="url" target="_blank" rel="noopener"
                [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
-              <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
+              <i class="fa-solid fa-ticket me-1"></i>Tickets
             </a>
           }
         </div>

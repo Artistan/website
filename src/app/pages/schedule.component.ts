@@ -39,57 +39,60 @@ import { awayMapUrl, gameTicketUrl, GameInfo, SEASON_SCHEDULE } from '../program
 
         <img src="Schedule.png" alt="Century Panther Football Schedule" class="img-fluid rounded border shadow-sm mb-4 w-100">
 
-        <div class="table-responsive mb-5">
-          <table class="table table-schedule table-striped align-middle bg-white rounded overflow-hidden">
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Opponent</th>
-                <th scope="col">Site</th>
-                <th scope="col">Location</th>
-                <th scope="col">Result</th>
-                <th scope="col">Tickets</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (game of schedule; track game.dateISO) {
-                <tr>
-                  <td class="text-nowrap">{{ fullDate(game) }}</td>
-                  <td class="fw-bold">{{ game.opponent }}</td>
-                  <td>
-                    @if (mapUrl(game); as url) {
-                      <a class="badge badge-away text-decoration-none" [href]="url" target="_blank" rel="noopener"
-                         [attr.aria-label]="'Map to ' + game.opponent + ' (opens in a new tab)'">
-                        <i class="fa-solid fa-bus me-1"></i>Away<i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                      </a>
-                    } @else {
-                      <span class="badge" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
-                        <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home' : 'Away' }}
-                      </span>
-                    }
-                  </td>
-                  <td class="small text-muted">{{ game.location }}</td>
-                  <td class="text-nowrap">
-                    @if (game.result) {
-                      <span class="fw-bold me-1">{{ outcome(game) }}</span>{{ game.result.panthers }}&ndash;{{ game.result.opponent }}
-                    } @else {
-                      <span class="text-muted">{{ game.kickoff }}</span>
-                    }
-                  </td>
-                  <td>
-                    @if (ticketUrl(game); as url) {
-                      <a class="btn btn-navy btn-sm text-nowrap" [href]="url" target="_blank" rel="noopener"
-                         [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
-                        <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
-                      </a>
-                    } @else {
-                      <span class="text-muted small">&mdash;</span>
-                    }
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
+        <!-- One list group per game: horizontal from md up, stacked on phones -->
+        <div class="schedule-list mb-5">
+          <div class="list-group list-group-horizontal-md schedule-row schedule-row--head d-none d-lg-flex">
+            <div class="list-group-item sched-date">Date</div>
+            <div class="list-group-item sched-opponent">Opponent</div>
+            <div class="list-group-item sched-site">Site</div>
+            <div class="list-group-item sched-location">Location</div>
+            <div class="list-group-item sched-result">Result</div>
+            <div class="list-group-item sched-tickets">Tickets</div>
+          </div>
+
+          @for (game of schedule; track game.dateISO) {
+            <div class="list-group list-group-horizontal-lg schedule-row">
+              <div class="list-group-item sched-date text-nowrap" data-label="Date">
+                <time [attr.datetime]="game.dateISO" [title]="fullDate(game)">{{ shortDate(game) }}</time>
+              </div>
+              <div class="list-group-item sched-opponent fw-bold" data-label="Opponent">
+                <span class="d-inline-flex align-items-center gap-2">
+                  <img class="schedule-logo" [src]="game.logo" alt="" aria-hidden="true" />
+                  {{ game.opponent }}
+                </span>
+              </div>
+              <div class="list-group-item sched-site" data-label="Site">
+                @if (mapUrl(game); as url) {
+                  <a class="badge badge-away text-decoration-none" [href]="url" target="_blank" rel="noopener"
+                     [attr.aria-label]="'Map to ' + game.opponent + ' (opens in a new tab)'">
+                    <i class="fa-solid fa-bus me-1"></i>Away<i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                  </a>
+                } @else {
+                  <span class="badge" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
+                    <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home' : 'Away' }}
+                  </span>
+                }
+              </div>
+              <div class="list-group-item sched-location small text-muted" data-label="Location">{{ game.location }}</div>
+              <div class="list-group-item sched-result text-nowrap" data-label="Result">
+                @if (game.result) {
+                  <span class="fw-bold me-1">{{ outcome(game) }}</span>{{ game.result.panthers }}&ndash;{{ game.result.opponent }}
+                } @else {
+                  <span class="text-muted">{{ game.kickoff }}</span>
+                }
+              </div>
+              <div class="list-group-item sched-tickets" data-label="Tickets">
+                @if (ticketUrl(game); as url) {
+                  <a class="btn btn-navy btn-sm text-nowrap" [href]="url" target="_blank" rel="noopener"
+                     [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
+                    <i class="fa-solid fa-ticket me-1"></i>Tickets
+                  </a>
+                } @else {
+                  <span class="text-muted small">&mdash;</span>
+                }
+              </div>
+            </div>
+          }
         </div>
 
         <div class="text-center mb-5">
@@ -143,6 +146,15 @@ export class ScheduleComponent {
 
   mapUrl = awayMapUrl;
   ticketUrl = gameTicketUrl;
+
+  /** "Thu 9/03" — the full date rides along in the title attribute. */
+  shortDate(game: GameInfo): string {
+    const [, month, day] = game.dateISO.split('-');
+    const weekday = new Date(`${game.dateISO}T00:00:00`).toLocaleDateString('en-US', {
+      weekday: 'short',
+    });
+    return `${weekday} ${+month}/${day}`;
+  }
 
   /** Parsed as local midnight — a bare `new Date(iso)` is UTC and renders a day early. */
   fullDate(game: GameInfo): string {

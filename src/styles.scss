@@ -606,6 +606,67 @@ a.sponsor-logo-box[href]:focus-visible {
   color: var(--panther-navy-deep);
 }
 
+/* ---------- schedule list ----------
+   One .list-group per game. Bootstrap's list-group-horizontal-md keeps the
+   fields in a row from md up and stacks them on phones; the widths below give
+   the columns a shared grid so rows line up, which a plain flex list-group
+   (flex: 1 1 auto) would not do. */
+.schedule-row {
+  margin-bottom: 0.5rem;
+}
+
+.schedule-row--head .list-group-item {
+  background-color: var(--panther-navy);
+  color: var(--panther-silver);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+@media (min-width: 978px) {
+  .schedule-row .list-group-item {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .sched-date { width: 10%; }
+  .sched-opponent { width: 22%; }
+  .sched-site { width: 12%; }
+  .sched-location { width: 32%; }
+  .sched-result { width: 11%; }
+  /* wide enough for the Buy Tickets button plus the item's own padding */
+  .sched-tickets { width: 13%; }
+}
+
+/* stacked: no header row is visible, so each value labels itself */
+@media (max-width: 977.98px) {
+  .schedule-row {
+    margin-bottom: 1rem;
+  }
+
+  .schedule-row .list-group-item[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--panther-slate, #5b6b84);
+    margin-bottom: 0.15rem;
+  }
+}
+
+/* opponent logo beside the name in the schedule table; decorative, the name
+   is already there, so it carries an empty alt */
+.schedule-logo {
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 /* ---------- sponsor tiers ---------- */
 .tier-card {
   border: 1px solid rgba(11, 31, 58, 0.12);
