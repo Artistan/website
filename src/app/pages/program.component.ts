@@ -1,7 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SponsorsSupportersComponent } from '../components/sponsors-supporters.component';
-import { COACHES, GAME_EVENTS, getFeaturedGame, Player, ROSTER } from '../program-data';
+import { awayMapUrl, COACHES, GAME_EVENTS, getFeaturedGame, Player, ROSTER } from '../program-data';
 
 type SortKey = 'number' | 'name' | 'position' | 'grade';
 
@@ -40,9 +40,16 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
                 </div>
               </div>
               <div class="col-lg-4 text-end">
-                <span class="badge fs-6 px-3 py-2" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
-                  <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home Game' : 'Away Game' }}
-                </span>
+                @if (mapUrl; as url) {
+                  <a class="badge badge-away fs-6 px-3 py-2 text-decoration-none" [href]="url" target="_blank" rel="noopener"
+                     [attr.aria-label]="'Map to ' + game.opponent + ' (opens in a new tab)'">
+                    <i class="fa-solid fa-bus me-1"></i>Away Game<i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                  </a>
+                } @else {
+                  <span class="badge fs-6 px-3 py-2" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
+                    <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home Game' : 'Away Game' }}
+                  </span>
+                }
               </div>
             </div>
           </div>
@@ -175,6 +182,7 @@ export class ProgramComponent {
   events = GAME_EVENTS;
   coaches = COACHES;
   mapEmbedUrl: SafeResourceUrl | null = null;
+  mapUrl = awayMapUrl(this.game);
 
   constructor(private sanitizer: DomSanitizer) {
     if (!this.game.isHome && this.game.mapQuery) {

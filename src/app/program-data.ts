@@ -18,6 +18,8 @@ export interface GameInfo {
   mapQuery?: string;
   /** Opponent mascot logo, cropped from public/Schedule.png. */
   logo: string;
+  /** Final score, once the game has been played. Absent means not yet played. */
+  result?: { panthers: number; opponent: number };
 }
 
 export interface GameEvent {
@@ -54,6 +56,7 @@ export const SEASON_SCHEDULE: GameInfo[] = [
     isHome: false,
     mapQuery: 'Tartan High School, Oakdale, MN',
     logo: 'opponent-logos/tartan.png',
+    result: { panthers: 25, opponent: 0 },
   },
   {
     opponent: 'Chaska',
@@ -129,6 +132,15 @@ export const SEASON_SCHEDULE: GameInfo[] = [
  * passed yet (so it stays featured through game day itself), or the season
  * finale once every game has been played.
  */
+/**
+ * Google Maps link to an away game's field. Null for home games, and for any away
+ * game missing `mapQuery` — callers fall back to a plain, unlinked badge.
+ */
+export function awayMapUrl(game: GameInfo): string | null {
+  if (game.isHome || !game.mapQuery) return null;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(game.mapQuery)}`;
+}
+
 export function getFeaturedGame(now: Date = new Date()): GameInfo {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const upcoming = SEASON_SCHEDULE.find((game) => new Date(`${game.dateISO}T00:00:00`) >= today);

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { OFFICIAL_FOOTBALL_PAGE_URL, TEAM_CALENDAR_SUBSCRIBE_URL } from '../site-links';
+import { awayMapUrl, GameInfo, SEASON_SCHEDULE } from '../program-data';
 
 @Component({
   selector: 'app-schedule',
@@ -32,6 +33,48 @@ import { OFFICIAL_FOOTBALL_PAGE_URL, TEAM_CALENDAR_SUBSCRIBE_URL } from '../site
         </div>
 
         <img src="Schedule.png" alt="Century Panther Football Schedule" class="img-fluid rounded border shadow-sm mb-4 w-100">
+
+        <div class="table-responsive mb-5">
+          <table class="table table-schedule table-striped align-middle bg-white rounded overflow-hidden">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Opponent</th>
+                <th scope="col">Site</th>
+                <th scope="col">Location</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (game of schedule; track game.dateISO) {
+                <tr>
+                  <td class="text-nowrap">{{ fullDate(game) }}</td>
+                  <td class="fw-bold">{{ game.opponent }}</td>
+                  <td>
+                    @if (mapUrl(game); as url) {
+                      <a class="badge badge-away text-decoration-none" [href]="url" target="_blank" rel="noopener"
+                         [attr.aria-label]="'Map to ' + game.opponent + ' (opens in a new tab)'">
+                        <i class="fa-solid fa-bus me-1"></i>Away<i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                      </a>
+                    } @else {
+                      <span class="badge" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
+                        <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home' : 'Away' }}
+                      </span>
+                    }
+                  </td>
+                  <td class="small text-muted">{{ game.location }}</td>
+                  <td class="text-nowrap">
+                    @if (game.result) {
+                      <span class="fw-bold me-1">{{ outcome(game) }}</span>{{ game.result.panthers }}&ndash;{{ game.result.opponent }}
+                    } @else {
+                      <span class="text-muted">{{ game.kickoff }}</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
 
         <!-- Live team calendar (public Google Calendar embed, agenda view) -->
         <div class="ratio ratio-4x3 rounded border shadow-sm mb-5" style="max-height: 640px;">
@@ -73,6 +116,26 @@ import { OFFICIAL_FOOTBALL_PAGE_URL, TEAM_CALENDAR_SUBSCRIBE_URL } from '../site
   `,
 })
 export class ScheduleComponent {
+  schedule = SEASON_SCHEDULE;
+
+  mapUrl = awayMapUrl;
+
+  /** Parsed as local midnight — a bare `new Date(iso)` is UTC and renders a day early. */
+  fullDate(game: GameInfo): string {
+    return new Date(`${game.dateISO}T00:00:00`).toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  }
+
+  outcome(game: GameInfo): string {
+    if (!game.result) return '';
+    if (game.result.panthers > game.result.opponent) return 'W';
+    return game.result.panthers < game.result.opponent ? 'L' : 'T';
+  }
+
   calendarSubscribeUrl = TEAM_CALENDAR_SUBSCRIBE_URL;
   officialFootballPageUrl = OFFICIAL_FOOTBALL_PAGE_URL;
 }
