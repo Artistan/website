@@ -36,7 +36,7 @@ source of truth, not the templates that render them:
 
 | File | Powers | Notes |
 |---|---|---|
-| `site-links.ts` | Donate/Zeffy/calendar/social URLs used across pages | Has an inline comment on regenerating the PayPal donate link if it expires |
+| `site-links.ts` | Donate/Zeffy/calendar/social URLs used across pages | `DONATE_URL` is the single Zeffy donation form behind every Donate button (navbar, footer, Get Involved, Sponsors, Contact) |
 | `touchdown-club.ts` | Corporate sponsor tiers, benefit comparison table, Touchdown Club (community) tiers | `SupportTier`/`ComparisonRow` interfaces — shown on Get Involved + Sponsors |
 | `club-board.ts` | Board member roster (About page) | Update when officers change |
 | `program-data.ts` | Roster, coaches, game info, and a `PROGRAM_DATA_IS_PLACEHOLDER` flag | Program page reads the flag to show a "sample layout" banner — flip it off once real season data is entered |

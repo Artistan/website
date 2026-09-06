@@ -514,6 +514,21 @@ a.sponsor-logo-box[href]:focus-visible {
   font-weight: 700;
 }
 
+/* green Donate button — the one deliberately non-brand colour on the site, so
+   the donate call to action reads apart from the navy/silver furniture */
+.btn-donate {
+  --bs-btn-bg: #1e7f45;
+  --bs-btn-border-color: #1e7f45;
+  --bs-btn-color: #fff;
+  --bs-btn-hover-bg: #176737;
+  --bs-btn-hover-border-color: #176737;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-bg: #176737;
+  --bs-btn-active-border-color: #176737;
+  --bs-btn-active-color: #fff;
+  font-weight: 700;
+}
+
 .btn-outline-navy {
   --bs-btn-color: var(--panther-navy);
   --bs-btn-border-color: var(--panther-navy);

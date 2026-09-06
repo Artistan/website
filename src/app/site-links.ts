@@ -1,13 +1,14 @@
 /**
  * External links used across the site — defined once so they're easy to swap.
- *
- * NOTE: the PayPal donate URL below uses a `token=` parameter. If PayPal ever
- * reports it expired, generate a durable link (Donate button -> hosted_button_id
- * format) from the PayPal dashboard and replace it here — every Donate button
- * on the site updates automatically.
+ */
+
+/**
+ * Zeffy donation form — the single donate destination for the whole site
+ * (navbar, footer, Get Involved, Sponsors, Contact). Replaced the old PayPal
+ * link, so changing it here changes every Donate button.
  */
 export const DONATE_URL =
-  'https://www.paypal.com/donate?token=_56EnR6YyAFSD_a9AR2zM_71l1B_XWonL7rLsOLxvBcz5tYXBmcMLPeDVAluFk0MBFziImI5WO8kOQkw';
+  'https://www.zeffy.com/en-US/donation-form/support-the-century-panthers-football-team?source=org-page';
 
 /** The Touchdown Club's email for all inquiries. */
 export const CONTACT_EMAIL = 'centurypantherfootball@gmail.com';

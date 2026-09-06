@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CONTACT_EMAIL, FACEBOOK_URL } from '../site-links';
+import { CONTACT_EMAIL, DONATE_URL, FACEBOOK_URL } from '../site-links';
 
 @Component({
   selector: 'app-contact',
@@ -33,6 +33,18 @@ import { CONTACT_EMAIL, FACEBOOK_URL } from '../site-links';
 
         <div class="row justify-content-center mt-5">
           <div class="col-lg-8">
+            <div class="card card-panther mb-4 text-center">
+              <div class="card-body p-4">
+                <h2 class="h5 fw-bold mb-2">Support Panther football</h2>
+                <p class="small text-muted mb-3">
+                  Donations go straight back into the program — no account needed.
+                </p>
+                <a [href]="donateUrl" target="_blank" rel="noopener" class="btn btn-donate btn-lg">
+                  <i class="fa-solid fa-heart me-2"></i>Donate Now
+                </a>
+              </div>
+            </div>
+
             <div class="card card-panther">
               <div class="card-body p-4">
                 <h2 class="h5 fw-bold mb-3"><i class="fa-solid fa-location-dot text-navy me-2"></i>Find us on game day</h2>
@@ -52,6 +64,8 @@ import { CONTACT_EMAIL, FACEBOOK_URL } from '../site-links';
   `,
 })
 export class ContactComponent {
+  donateUrl = DONATE_URL;
+
   // One club inbox — subject lines route the conversation.
   channels = [
     {

@@ -20,7 +20,10 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
       <div class="container hero-inner">
         <div class="section-kicker mb-2">Get Involved</div>
         <h1 class="display-5 display-font mb-2">Join the <span class="text-silver">Panther Family</span></h1>
-        <p class="lead mb-0">Membership, volunteering, and every way to back the navy &amp; silver.</p>
+        <p class="lead mb-3">Membership, volunteering, and every way to back the navy &amp; silver.</p>
+        <a [href]="donateUrl" target="_blank" rel="noopener" class="btn btn-donate btn-lg">
+          <i class="fa-solid fa-heart me-2"></i>Donate Now
+        </a>
       </div>
     </section>
 
@@ -338,11 +341,11 @@ import { CORPORATE_COMPARISON, CORPORATE_SPONSOR_TIERS, TOUCHDOWN_CLUB_INTRO, TO
         <div class="section-kicker mb-2">Prefer to give directly?</div>
         <h2 class="display-font h1 mb-3">Donate to the club</h2>
         <p class="text-muted mx-auto mb-4" style="max-width: 40rem;">
-          No time for shifts or meetings? A one-time donation through PayPal goes straight
-          to equipment, team meals, and scholarships for Panther players.
+          No time for shifts or meetings? A one-time donation goes straight to equipment,
+          team meals, and scholarships for Panther players.
         </p>
-        <a [href]="donateUrl" target="_blank" rel="noopener" class="btn btn-navy btn-lg">
-          <i class="fa-solid fa-heart me-2"></i>Donate with PayPal
+        <a [href]="donateUrl" target="_blank" rel="noopener" class="btn btn-donate btn-lg">
+          <i class="fa-solid fa-heart me-2"></i>Donate Now
         </a>
         <p class="small text-muted mt-3 mb-0">
           The Century Panther Touchdown Club is an official 501(c)(3) non-profit organization.
