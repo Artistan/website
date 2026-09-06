@@ -60,6 +60,16 @@ export const SHOW_BUSINESS_SPONSORS_ZEFFY_LINK = new Date() < BUSINESS_SPONSORS_
 export const OFFICIAL_FOOTBALL_PAGE_URL =
   'https://www.centurypanthers.org/page/show/5060449?subseason=614343&tab=content';
 
+/** Bound's Century varsity football team page — schedule and statistics. */
+export const GOBOUND_TEAM_PAGE_URL =
+  'https://www.gobound.com/mn/mshsl/fb/2026-27/rochestercentury/v#this';
+
+/**
+ * Bound's ticket listing for all Rochester Century athletics. Used as the
+ * fallback when a game has no specific checkout link of its own.
+ */
+export const BOUND_TICKETS_URL = 'https://www.gobound.com/mn/schools/rochestercentury/tickets';
+
 /**
  * "Add to Google Calendar" link for the team calendars — opens Google
  * Calendar and offers to subscribe to all of them.

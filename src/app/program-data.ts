@@ -6,6 +6,8 @@
  * (sources: public/Schedule.png, docs/coaches.png).
  */
 
+import { BOUND_TICKETS_URL } from './site-links';
+
 export interface GameInfo {
   opponent: string;
   /** ISO date (YYYY-MM-DD) used to compute the featured "this week" game. */
@@ -145,6 +147,15 @@ export const SEASON_SCHEDULE: GameInfo[] = [
  * Google Maps link to an away game's field. Null for home games, and for any away
  * game missing `mapQuery` — callers fall back to a plain, unlinked badge.
  */
+/**
+ * Ticket link for a game — its own Bound checkout when it has one, otherwise the
+ * school's general Bound tickets page. Null once the game has been played.
+ */
+export function gameTicketUrl(game: GameInfo): string | null {
+  if (game.result) return null;
+  return game.ticketUrl ?? BOUND_TICKETS_URL;
+}
+
 export function awayMapUrl(game: GameInfo): string | null {
   if (game.isHome || !game.mapQuery) return null;
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(game.mapQuery)}`;

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { OFFICIAL_FOOTBALL_PAGE_URL, TEAM_CALENDAR_SUBSCRIBE_URL } from '../site-links';
-import { awayMapUrl, GameInfo, SEASON_SCHEDULE } from '../program-data';
+import { GOBOUND_TEAM_PAGE_URL, OFFICIAL_FOOTBALL_PAGE_URL, TEAM_CALENDAR_SUBSCRIBE_URL } from '../site-links';
+import { awayMapUrl, gameTicketUrl, GameInfo, SEASON_SCHEDULE } from '../program-data';
 
 @Component({
   selector: 'app-schedule',
@@ -28,6 +28,11 @@ import { awayMapUrl, GameInfo, SEASON_SCHEDULE } from '../program-data';
             </a>
             <a class="btn btn-outline-navy btn-sm" [href]="officialFootballPageUrl" target="_blank" rel="noopener">
               <i class="fa-solid fa-football me-1"></i>RCHS football page
+            </a>
+            <a class="btn btn-outline-navy btn-sm" [href]="goBoundTeamPageUrl" target="_blank" rel="noopener"
+               title="Schedule and statistics"
+               aria-label="GoBound: schedule and statistics (opens in a new tab)">
+              <i class="fa-solid fa-chart-line me-1"></i>GoBound &gt;&gt;
             </a>
           </div>
         </div>
@@ -72,8 +77,8 @@ import { awayMapUrl, GameInfo, SEASON_SCHEDULE } from '../program-data';
                     }
                   </td>
                   <td>
-                    @if (game.ticketUrl) {
-                      <a class="btn btn-navy btn-sm text-nowrap" [href]="game.ticketUrl" target="_blank" rel="noopener"
+                    @if (ticketUrl(game); as url) {
+                      <a class="btn btn-navy btn-sm text-nowrap" [href]="url" target="_blank" rel="noopener"
                          [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
                         <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
                       </a>
@@ -85,6 +90,14 @@ import { awayMapUrl, GameInfo, SEASON_SCHEDULE } from '../program-data';
               }
             </tbody>
           </table>
+        </div>
+
+        <div class="text-center mb-5">
+          <a class="btn btn-navy btn-lg" [href]="goBoundTeamPageUrl" target="_blank" rel="noopener"
+             title="Schedule and statistics"
+             aria-label="Statistics and scores on GoBound (opens in a new tab)">
+            <i class="fa-solid fa-chart-line me-2"></i>Statistics &amp; Scores &gt;&gt; GoBound
+          </a>
         </div>
 
         <!-- Live team calendar (public Google Calendar embed, agenda view) -->
@@ -130,6 +143,7 @@ export class ScheduleComponent {
   schedule = SEASON_SCHEDULE;
 
   mapUrl = awayMapUrl;
+  ticketUrl = gameTicketUrl;
 
   /** Parsed as local midnight — a bare `new Date(iso)` is UTC and renders a day early. */
   fullDate(game: GameInfo): string {
@@ -148,5 +162,6 @@ export class ScheduleComponent {
   }
 
   calendarSubscribeUrl = TEAM_CALENDAR_SUBSCRIBE_URL;
+  goBoundTeamPageUrl = GOBOUND_TEAM_PAGE_URL;
   officialFootballPageUrl = OFFICIAL_FOOTBALL_PAGE_URL;
 }

@@ -1,7 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SponsorsSupportersComponent } from '../components/sponsors-supporters.component';
-import { awayMapUrl, COACHES, GAME_EVENTS, getFeaturedGame, Player, ROSTER } from '../program-data';
+import { awayMapUrl, COACHES, GAME_EVENTS, gameTicketUrl, getFeaturedGame, Player, ROSTER } from '../program-data';
 
 type SortKey = 'number' | 'name' | 'position' | 'grade';
 
@@ -36,26 +36,28 @@ const GRADE_RANK: Record<string, number> = { 'Sr.': 4, 'Jr.': 3, 'So.': 2, 'Fr.'
                 <div class="d-flex flex-wrap gap-4 small text-muted">
                   <span><i class="fa-solid fa-calendar-days text-navy me-2"></i>{{ game.date }}</span>
                   <span><i class="fa-solid fa-clock text-navy me-2"></i>Kickoff {{ game.kickoff }}</span>
-                    <span><i class="fa-solid fa-location-dot text-navy me-2"></i>{{ game.location }}</span>
+                  <span><i class="fa-solid fa-location-dot text-navy me-2"></i>{{ game.location }}</span>
                 </div>
-                @if (game.ticketUrl) {
-                  <a class="btn btn-navy btn-sm mt-3" [href]="game.ticketUrl" target="_blank" rel="noopener"
-                     [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
-                    <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
-                  </a>
-                }
               </div>
-              <div class="col-lg-4 text-end">
-                @if (mapUrl; as url) {
-                  <a class="badge badge-away fs-6 px-3 py-2 text-decoration-none" [href]="url" target="_blank" rel="noopener"
-                     [attr.aria-label]="'Map to ' + game.opponent + ' (opens in a new tab)'">
-                    <i class="fa-solid fa-bus me-1"></i>Away Game<i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                  </a>
-                } @else {
-                  <span class="badge fs-6 px-3 py-2" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
-                    <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home Game' : 'Away Game' }}
-                  </span>
-                }
+              <div class="col-lg-4">
+                <div class="d-flex flex-wrap align-items-center gap-2 justify-content-lg-end">
+                  @if (mapUrl; as url) {
+                    <a class="badge badge-away fs-6 px-3 py-2 text-decoration-none" [href]="url" target="_blank" rel="noopener"
+                       [attr.aria-label]="'Map to ' + game.opponent + ' (opens in a new tab)'">
+                      <i class="fa-solid fa-bus me-1"></i>Away Game<i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                    </a>
+                  } @else {
+                    <span class="badge fs-6 px-3 py-2" [class.badge-home]="game.isHome" [class.badge-away]="!game.isHome">
+                      <i class="fa-solid me-1" [class.fa-house]="game.isHome" [class.fa-bus]="!game.isHome"></i>{{ game.isHome ? 'Home Game' : 'Away Game' }}
+                    </span>
+                  }
+                  @if (ticketUrl; as url) {
+                    <a class="btn btn-navy btn-sm" [href]="url" target="_blank" rel="noopener"
+                       [attr.aria-label]="'Buy tickets for the ' + game.opponent + ' game (opens in a new tab)'">
+                      <i class="fa-solid fa-ticket me-1"></i>Buy Tickets
+                    </a>
+                  }
+                </div>
               </div>
             </div>
           </div>
@@ -189,6 +191,7 @@ export class ProgramComponent {
   coaches = COACHES;
   mapEmbedUrl: SafeResourceUrl | null = null;
   mapUrl = awayMapUrl(this.game);
+  ticketUrl = gameTicketUrl(this.game);
 
   constructor(private sanitizer: DomSanitizer) {
     if (!this.game.isHome && this.game.mapQuery) {
