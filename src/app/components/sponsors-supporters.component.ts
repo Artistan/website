@@ -13,6 +13,8 @@ interface RealSponsor {
   name: string;
   /** True when the logo's artwork is light/transparent and washes out on a white card. */
   dark?: boolean;
+  /** Sponsor's own page. When set, the logo box links out to it. */
+  url?: string;
 }
 
 interface SponsorRow {
@@ -100,7 +102,11 @@ const CORPORATE_ROWS: SponsorRow[] = [
   corporateSponsorRow(5, 'Panther Fuel Sponsors', [
     { src: '/sponsors/hyvee.png', name: 'Hy-Vee' },
     { src: '/sponsors/chick-fil-a.png', name: 'Chick-fil-A' },
-    { src: '/sponsors/WestEndBlends.jpg', name: 'West End Blends' },
+    {
+      src: '/sponsors/WestEndBlends.jpg',
+      name: 'West End Blends',
+      url: 'https://www.facebook.com/share/p/1DpaeFw4D1/',
+    },
   ]),
   corporateSponsorRow(6, '5th Quarter Sponsor', [{ src: '/sponsors/Tavern 22.jpg', name: 'Tavern 22' }]),
 ];
@@ -178,14 +184,20 @@ const COMMUNITY_ROWS: SampleRow[] = [
             <div class="row g-3 mb-4" [class]="row.rowCols">
               @for (sponsor of row.sponsors; track sponsor.name) {
                 <div class="col">
-                  <div class="sponsor-logo-box" [class.sponsor-logo-box--dark]="sponsor.dark">
+                  <a
+                    class="sponsor-logo-box"
+                    [class.sponsor-logo-box--dark]="sponsor.dark"
+                    [attr.href]="sponsor.url ?? null"
+                    [attr.target]="sponsor.url ? '_blank' : null"
+                    [attr.rel]="sponsor.url ? 'noopener' : null"
+                    [attr.aria-label]="sponsor.url ? sponsor.name + ' (opens in a new tab)' : null">
                     @if (sponsor.src) {
                       <img [src]="sponsor.src" [alt]="sponsor.name" class="sponsor-logo-img" />
                     } @else {
                       <i class="fa-solid fa-building"></i>
                     }
                     <span class="small fw-semibold">{{ sponsor.name }}</span>
-                  </div>
+                  </a>
                 </div>
               }
             </div>
@@ -196,14 +208,20 @@ const COMMUNITY_ROWS: SampleRow[] = [
         <div class="row g-3 mb-4" [class]="couponCardRowCols">
           @for (sponsor of couponCardSponsors; track sponsor.name) {
             <div class="col">
-              <div class="sponsor-logo-box" [class.sponsor-logo-box--dark]="sponsor.dark">
+              <a
+                class="sponsor-logo-box"
+                [class.sponsor-logo-box--dark]="sponsor.dark"
+                [attr.href]="sponsor.url ?? null"
+                [attr.target]="sponsor.url ? '_blank' : null"
+                [attr.rel]="sponsor.url ? 'noopener' : null"
+                [attr.aria-label]="sponsor.url ? sponsor.name + ' (opens in a new tab)' : null">
                 @if (sponsor.src) {
                   <img [src]="sponsor.src" [alt]="sponsor.name" class="sponsor-logo-img" />
                 } @else {
                   <i class="fa-solid fa-building"></i>
                 }
                 <span class="small fw-semibold">{{ sponsor.name }}</span>
-              </div>
+              </a>
             </div>
           }
         </div>
