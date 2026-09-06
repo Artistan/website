@@ -31,7 +31,7 @@ import { OFFICIAL_FOOTBALL_PAGE_URL, TEAM_CALENDAR_SUBSCRIBE_URL } from '../site
           </div>
         </div>
 
-        <img src="Schedule.png" alt="Century Panther Football schedule" class="img-fluid rounded border shadow-sm mb-4 w-100">
+        <img src="Schedule.png" alt="Century Panther Football Schedule" class="img-fluid rounded border shadow-sm mb-4 w-100">
 
         <!-- Live team calendar (public Google Calendar embed, agenda view) -->
         <div class="ratio ratio-4x3 rounded border shadow-sm mb-5" style="max-height: 640px;">

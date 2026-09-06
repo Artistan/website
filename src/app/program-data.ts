@@ -149,7 +149,7 @@ export const GAME_EVENTS: GameEvent[] = [
   {
     icon: 'fa-solid fa-shirt',
     title: 'Spirit wear table',
-    text: 'New Panther gear on sale all game at the Touchdown Club tent.',
+    text: 'New Panther gear on sale during the game from the RCHS Booster Club.',
   },
 ];
 

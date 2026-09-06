@@ -136,6 +136,7 @@ const COMMUNITY_ROWS: SampleRow[] = [
     familySupporter('Elizabeth & Patrick', 'Rice'),
     familySupporter('Jane & Eric', 'Peterson'),
     familySupporter('Heidi & Ed', 'Elliott'),
+    familySupporter('Lyn & Charles', 'Peterson'),
   ]),
   communityRow(1, 'Century Champions', []),
   communityRow(2, 'Prowl Backers', []),
