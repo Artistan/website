@@ -91,7 +91,7 @@ const CORPORATE_ROWS: SponsorRow[] = [
   corporateSponsorRow(3, 'Bronze Sponsors', [
     { src: '/sponsors/alerus-logo.svg', name: 'Alerus' },
     { src: '/sponsors/Atlas.png', name: 'Atlas Insurance' },
-    { src: '/sponsors/ArchKey_Solutions.jpg', name: 'ArchKey Technologies' },
+    { src: '/sponsors/Archkey-Technologies.png', name: 'ArchKey Technologies' },
     { src: '/sponsors/BearArms.png', name: 'Bear Arms' },
     { src: '/sponsors/Bowlocity.png', name: 'Bowlocity' },
     { src: '/sponsors/counselor-realty-homepage-logo.svg', name: "Counselor Realty Rochester" },
@@ -100,7 +100,7 @@ const CORPORATE_ROWS: SponsorRow[] = [
   ]),
   corporateSponsorRow(4, 'Iron Sponsors', [
     { src: '/sponsors/enhanced-driving-institute.png', name: 'EDI Driving School' },
-    { src: '/sponsors/superior-screeners.svg', name: 'Superior Screeners' }
+    { src: '/sponsors/superior-screeners.png', name: 'Superior Screeners' }
   ]),
   corporateSponsorRow(5, 'Panther Fuel Sponsors', [
     { src: '/sponsors/hyvee.png', name: 'Hy-Vee' },
