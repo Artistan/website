@@ -82,6 +82,7 @@ BANDS = [
 ]
 
 PANTHER = data_uri("panther-logo.png")
+QR_SITE = data_uri(str(pathlib.Path(__file__).parent / "qr-site.svg"))
 
 
 def group_html(g: dict, band_h: float) -> str:
@@ -128,8 +129,10 @@ html,body {{ margin:0; padding:0; -webkit-print-color-adjust:exact; print-color-
 
 /* left brand panel */
 .brand {{ flex:0 0 30in; display:flex; flex-direction:column; align-items:center;
-  justify-content:center; text-align:center; padding:3in 2.2in;
+  text-align:center; padding:2.6in 2.2in 2.2in;
   border-right:.14in solid rgba(195,201,211,.30); background:rgba(4,10,20,.32); }}
+.brand-main {{ flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; }}
 .brand .logo {{ width:10.5in; height:10.5in; object-fit:contain;
   filter: drop-shadow(0 .25in .5in rgba(0,0,0,.5)); }}
 .brand .kicker {{ margin-top:1.3in; color:var(--silver); font-weight:800;
@@ -139,6 +142,14 @@ html,body {{ margin:0; padding:0; -webkit-print-color-adjust:exact; print-color-
 .brand h1 .big {{ display:block; font-size:4.2in; color:#fff; }}
 .brand h1 .sub {{ display:block; font-size:2.05in; color:var(--silver-bright); margin-top:.28in; }}
 .brand .foot {{ margin-top:1in; color:var(--muted); font-size:1.1in; font-weight:600; }}
+.brand-qr {{ display:flex; justify-content:center; margin-top:1.5in; }}
+.qr-card {{ background:#fff; border-radius:.8in; padding:1.1in 1.3in 1in;
+  display:flex; flex-direction:column; align-items:center; gap:.75in;
+  box-shadow:0 .16in .55in rgba(0,0,0,.42); }}
+.qr-card img {{ width:11in; height:11in; display:block; }}
+.qr-caption {{ color:var(--navy); font-weight:800; letter-spacing:.005em;
+  font-size:.85in; line-height:1; text-align:center; white-space:nowrap; }}
+.qr-caption .lead {{ font-weight:600; }}
 
 /* right content */
 .content {{ flex:1; display:flex; flex-direction:column; justify-content:center;
@@ -162,10 +173,18 @@ html,body {{ margin:0; padding:0; -webkit-print-color-adjust:exact; print-color-
 <body>
   <div class="banner">
     <div class="brand">
-      <img class="logo" src="{PANTHER}" alt="Century Panther Touchdown Club">
-      <div class="kicker">Century Panther Football</div>
-      <h1><span class="big">Thank You</span><span class="sub">To Our 2026 Sponsors</span></h1>
-      <div class="foot">Proud partners of Panther football</div>
+      <div class="brand-main">
+        <img class="logo" src="{PANTHER}" alt="Century Panther Touchdown Club">
+        <div class="kicker">Century Panther Football</div>
+        <h1><span class="big">Thank You</span><span class="sub">To Our 2026 Sponsors</span></h1>
+        <div class="foot">Proud partners of Panther football</div>
+      </div>
+      <div class="brand-qr">
+        <div class="qr-card">
+          <img src="{QR_SITE}" alt="Scan to visit CenturyPantherFootball.com">
+          <div class="qr-caption"><span class="lead">Visit</span> CenturyPantherFootball.com</div>
+        </div>
+      </div>
     </div>
     <div class="content">
       {bands_markup}
