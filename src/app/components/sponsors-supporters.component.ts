@@ -84,20 +84,23 @@ const CORPORATE_ROWS: SponsorRow[] = [
   corporateSponsorRow(0, 'Panther Fuel Platinum Partner', [{ src: '/sponsors/hyvee.png', name: 'Hy-Vee' }]),
   corporateSponsorRow(0, 'Platinum Sponsors', []),
   corporateSponsorRow(1, 'Gold Sponsors', [{ src: '/sponsors/LakesideDental.png', name: 'Lakeside Dentistry' }]),
-  corporateSponsorRow(2, 'Silver Sponsors', [{ src: '/sponsors/VFW-1215.png', name: 'VFW Post 1215' }]),
+  corporateSponsorRow(2, 'Silver Sponsors', [
+    { src: '/sponsors/VFW-1215.png', name: 'VFW Post 1215' },
+    { src: '/sponsors/TKLOGO.svg', name: 'Tom Kadlec' },
+  ]),
   corporateSponsorRow(3, 'Bronze Sponsors', [
     { src: '/sponsors/alerus-logo.svg', name: 'Alerus' },
     { src: '/sponsors/Atlas.png', name: 'Atlas Insurance' },
-    { src: '/sponsors/Archkey-Technologies.png', name: 'Archkey Technologies' },
+    { src: '/sponsors/ArchKey_Solutions.jpg', name: 'ArchKey Technologies' },
     { src: '/sponsors/BearArms.png', name: 'Bear Arms' },
     { src: '/sponsors/Bowlocity.png', name: 'Bowlocity' },
-    { src: '/sponsors/counselor-realty-homepage-logo.png', name: "Counselor Realty Rochester", dark: true },
+    { src: '/sponsors/counselor-realty-homepage-logo.svg', name: "Counselor Realty Rochester" },
     { src: '/sponsors/MC_STACKED_BLACK_RGB_CLEAR.png', name: 'Mayo Clinic' },
     { src: '/sponsors/summit.png', name: 'Summit Fire Protection' },
   ]),
   corporateSponsorRow(4, 'Iron Sponsors', [
     { src: '/sponsors/enhanced-driving-institute.png', name: 'EDI Driving School' },
-    { src: '/sponsors/superior-screeners.png', name: 'Superior Screeners' }
+    { src: '/sponsors/superior-screeners.svg', name: 'Superior Screeners' }
   ]),
   corporateSponsorRow(5, 'Panther Fuel Sponsors', [
     { src: '/sponsors/hyvee.png', name: 'Hy-Vee' },
