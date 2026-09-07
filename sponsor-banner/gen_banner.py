@@ -9,7 +9,7 @@ import base64
 import mimetypes
 import pathlib
 
-ROOT = pathlib.Path("/Users/cpeterson/PhpstormProjects/pool/.agents/worktrees/panthers-sponsors-banner-3e99c4")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 PUB = ROOT / "public"
 OUT = pathlib.Path(__file__).parent / "sponsor-banner.html"
 
